@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -23,12 +23,7 @@
     </bean>
 
 
-    <bean id="dataSource-log4jdbc" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="net.sf.log4jdbc.DriverSpy" />
-        <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/credit?characterEncoding=UTF-8&amp;autoReconnect=true" />
-        <property name="username" value="root" />
-        <property name="password" value="funda91239911@@" />
-    </bean>-->
+-->
     <!-- MyBatis -->
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -43,7 +38,6 @@
 
             <property name="url" value="jdbc:mysql://localhost:3306/credit?characterEncoding=UTF-8&amp;autoReconnect=true" />
             <property name="username" value="root" />
-            <property name="password" value="funda91239911@@" />
             <property name="validationQuery" value="select 1"/>
 
 
