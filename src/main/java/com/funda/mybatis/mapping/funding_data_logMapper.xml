@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.funding_data_logMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.funding_data_log" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="funding_idx" property="fundingIdx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="visible" property="visible" jdbcType="INTEGER" />
+    <result column="announced_amount" property="announcedAmount" jdbcType="INTEGER" />
+    <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="max_invest_amount" property="maxInvestAmount" jdbcType="INTEGER" />
+    <result column="monthly_repayment_grace" property="monthlyRepaymentGrace" jdbcType="INTEGER" />
+    <result column="monthly_repayment" property="monthlyRepayment" jdbcType="INTEGER" />
+    <result column="interest_rate" property="interestRate" jdbcType="REAL" />
+    <result column="accrued_interest_rate" property="accruedInterestRate" jdbcType="REAL" />
+    <result column="funda_support_interest_rate" property="fundaSupportInterestRate" jdbcType="REAL" />
+    <result column="repayment_method" property="repaymentMethod" jdbcType="CHAR" />
+    <result column="loan_period" property="loanPeriod" jdbcType="INTEGER" />
+    <result column="grace_period" property="gracePeriod" jdbcType="INTEGER" />
+    <result column="contract_date" property="contractDate" jdbcType="DATE" />
+    <result column="beginning_date" property="beginningDate" jdbcType="DATE" />
+    <result column="interest_date" property="interestDate" jdbcType="DATE" />
+    <result column="monthly_repayment_date" property="monthlyRepaymentDate" jdbcType="DATE" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="default_rate" property="defaultRate" jdbcType="REAL" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="disclosure_date" property="disclosureDate" jdbcType="TIMESTAMP" />
+    <result column="investment_start_date" property="investmentStartDate" jdbcType="TIMESTAMP" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="investment_application_date" property="investmentApplicationDate" jdbcType="TIMESTAMP" />
+    <result column="funding_style" property="fundingStyle" jdbcType="INTEGER" />
+    <result column="is_actual" property="isActual" jdbcType="INTEGER" />
+    <result column="funding_type" property="fundingType" jdbcType="INTEGER" />
+    <result column="additional_interest_flag" property="additionalInterestFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="repayment_status" property="repaymentStatus" jdbcType="CHAR" />
+    <result column="deposit_status" property="depositStatus" jdbcType="CHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="session_ip" property="sessionIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.funding_data_logWithBLOBs" extends="BaseResultMap" >
+    <result column="sub_title" property="subTitle" jdbcType="LONGVARCHAR" />
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, funding_idx, store_idx, code, title, visible, announced_amount, total_amount, 
+    max_invest_amount, monthly_repayment_grace, monthly_repayment, interest_rate, accrued_interest_rate, 
+    funda_support_interest_rate, repayment_method, loan_period, grace_period, contract_date, 
+    beginning_date, interest_date, monthly_repayment_date, score, default_rate, update_date, 
+    disclosure_date, investment_start_date, register_date, investment_application_date, 
+    funding_style, is_actual, funding_type, additional_interest_flag, status, repayment_status, 
+    deposit_status, session_id, session_ip
+  </sql>
+  <sql id="Blob_Column_List" >
+    sub_title, memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.funding_data_logExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from funding_data_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.funding_data_logExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from funding_data_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from funding_data_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from funding_data_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.funding_data_logExample" >
+    delete from funding_data_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.funding_data_logWithBLOBs" >
+    insert into funding_data_log (idx, funding_idx, store_idx, 
+      code, title, visible, 
+      announced_amount, total_amount, max_invest_amount, 
+      monthly_repayment_grace, monthly_repayment, 
+      interest_rate, accrued_interest_rate, funda_support_interest_rate, 
+      repayment_method, loan_period, grace_period, 
+      contract_date, beginning_date, interest_date, 
+      monthly_repayment_date, score, default_rate, 
+      update_date, disclosure_date, investment_start_date, 
+      register_date, investment_application_date, 
+      funding_style, is_actual, funding_type, 
+      additional_interest_flag, status, repayment_status, 
+      deposit_status, session_id, session_ip, 
+      sub_title, memo)
+    values (#{idx,jdbcType=INTEGER}, #{fundingIdx,jdbcType=INTEGER}, #{storeIdx,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{visible,jdbcType=INTEGER}, 
+      #{announcedAmount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, #{maxInvestAmount,jdbcType=INTEGER}, 
+      #{monthlyRepaymentGrace,jdbcType=INTEGER}, #{monthlyRepayment,jdbcType=INTEGER}, 
+      #{interestRate,jdbcType=REAL}, #{accruedInterestRate,jdbcType=REAL}, #{fundaSupportInterestRate,jdbcType=REAL}, 
+      #{repaymentMethod,jdbcType=CHAR}, #{loanPeriod,jdbcType=INTEGER}, #{gracePeriod,jdbcType=INTEGER}, 
+      #{contractDate,jdbcType=DATE}, #{beginningDate,jdbcType=DATE}, #{interestDate,jdbcType=DATE}, 
+      #{monthlyRepaymentDate,jdbcType=DATE}, #{score,jdbcType=INTEGER}, #{defaultRate,jdbcType=REAL}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{disclosureDate,jdbcType=TIMESTAMP}, #{investmentStartDate,jdbcType=TIMESTAMP}, 
+      #{registerDate,jdbcType=TIMESTAMP}, #{investmentApplicationDate,jdbcType=TIMESTAMP}, 
+      #{fundingStyle,jdbcType=INTEGER}, #{isActual,jdbcType=INTEGER}, #{fundingType,jdbcType=INTEGER}, 
+      #{additionalInterestFlag,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{repaymentStatus,jdbcType=CHAR}, 
+      #{depositStatus,jdbcType=CHAR}, #{sessionId,jdbcType=VARCHAR}, #{sessionIp,jdbcType=VARCHAR}, 
+      #{subTitle,jdbcType=LONGVARCHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.funding_data_logWithBLOBs" >
+    insert into funding_data_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="fundingIdx != null" >
+        funding_idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="visible != null" >
+        visible,
+      </if>
+      <if test="announcedAmount != null" >
+        announced_amount,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="maxInvestAmount != null" >
+        max_invest_amount,
+      </if>
+      <if test="monthlyRepaymentGrace != null" >
+        monthly_repayment_grace,
+      </if>
+      <if test="monthlyRepayment != null" >
+        monthly_repayment,
+      </if>
+      <if test="interestRate != null" >
+        interest_rate,
+      </if>
+      <if test="accruedInterestRate != null" >
+        accrued_interest_rate,
+      </if>
+      <if test="fundaSupportInterestRate != null" >
+        funda_support_interest_rate,
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method,
+      </if>
+      <if test="loanPeriod != null" >
+        loan_period,
+      </if>
+      <if test="gracePeriod != null" >
+        grace_period,
+      </if>
+      <if test="contractDate != null" >
+        contract_date,
+      </if>
+      <if test="beginningDate != null" >
+        beginning_date,
+      </if>
+      <if test="interestDate != null" >
+        interest_date,
+      </if>
+      <if test="monthlyRepaymentDate != null" >
+        monthly_repayment_date,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="defaultRate != null" >
+        default_rate,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="disclosureDate != null" >
+        disclosure_date,
+      </if>
+      <if test="investmentStartDate != null" >
+        investment_start_date,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="investmentApplicationDate != null" >
+        investment_application_date,
+      </if>
+      <if test="fundingStyle != null" >
+        funding_style,
+      </if>
+      <if test="isActual != null" >
+        is_actual,
+      </if>
+      <if test="fundingType != null" >
+        funding_type,
+      </if>
+      <if test="additionalInterestFlag != null" >
+        additional_interest_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status,
+      </if>
+      <if test="depositStatus != null" >
+        deposit_status,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="sessionIp != null" >
+        session_ip,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="fundingIdx != null" >
+        #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="visible != null" >
+        #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="announcedAmount != null" >
+        #{announcedAmount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="maxInvestAmount != null" >
+        #{maxInvestAmount,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyRepaymentGrace != null" >
+        #{monthlyRepaymentGrace,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyRepayment != null" >
+        #{monthlyRepayment,jdbcType=INTEGER},
+      </if>
+      <if test="interestRate != null" >
+        #{interestRate,jdbcType=REAL},
+      </if>
+      <if test="accruedInterestRate != null" >
+        #{accruedInterestRate,jdbcType=REAL},
+      </if>
+      <if test="fundaSupportInterestRate != null" >
+        #{fundaSupportInterestRate,jdbcType=REAL},
+      </if>
+      <if test="repaymentMethod != null" >
+        #{repaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="loanPeriod != null" >
+        #{loanPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="gracePeriod != null" >
+        #{gracePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null" >
+        #{contractDate,jdbcType=DATE},
+      </if>
+      <if test="beginningDate != null" >
+        #{beginningDate,jdbcType=DATE},
+      </if>
+      <if test="interestDate != null" >
+        #{interestDate,jdbcType=DATE},
+      </if>
+      <if test="monthlyRepaymentDate != null" >
+        #{monthlyRepaymentDate,jdbcType=DATE},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="defaultRate != null" >
+        #{defaultRate,jdbcType=REAL},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disclosureDate != null" >
+        #{disclosureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investmentStartDate != null" >
+        #{investmentStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investmentApplicationDate != null" >
+        #{investmentApplicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fundingStyle != null" >
+        #{fundingStyle,jdbcType=INTEGER},
+      </if>
+      <if test="isActual != null" >
+        #{isActual,jdbcType=INTEGER},
+      </if>
+      <if test="fundingType != null" >
+        #{fundingType,jdbcType=INTEGER},
+      </if>
+      <if test="additionalInterestFlag != null" >
+        #{additionalInterestFlag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="repaymentStatus != null" >
+        #{repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="depositStatus != null" >
+        #{depositStatus,jdbcType=CHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionIp != null" >
+        #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.funding_data_logExample" resultType="java.lang.Integer" >
+    select count(*) from funding_data_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update funding_data_log
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.fundingIdx != null" >
+        funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visible != null" >
+        visible = #{record.visible,jdbcType=INTEGER},
+      </if>
+      <if test="record.announcedAmount != null" >
+        announced_amount = #{record.announcedAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalAmount != null" >
+        total_amount = #{record.totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxInvestAmount != null" >
+        max_invest_amount = #{record.maxInvestAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthlyRepaymentGrace != null" >
+        monthly_repayment_grace = #{record.monthlyRepaymentGrace,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthlyRepayment != null" >
+        monthly_repayment = #{record.monthlyRepayment,jdbcType=INTEGER},
+      </if>
+      <if test="record.interestRate != null" >
+        interest_rate = #{record.interestRate,jdbcType=REAL},
+      </if>
+      <if test="record.accruedInterestRate != null" >
+        accrued_interest_rate = #{record.accruedInterestRate,jdbcType=REAL},
+      </if>
+      <if test="record.fundaSupportInterestRate != null" >
+        funda_support_interest_rate = #{record.fundaSupportInterestRate,jdbcType=REAL},
+      </if>
+      <if test="record.repaymentMethod != null" >
+        repayment_method = #{record.repaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="record.loanPeriod != null" >
+        loan_period = #{record.loanPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.gracePeriod != null" >
+        grace_period = #{record.gracePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractDate != null" >
+        contract_date = #{record.contractDate,jdbcType=DATE},
+      </if>
+      <if test="record.beginningDate != null" >
+        beginning_date = #{record.beginningDate,jdbcType=DATE},
+      </if>
+      <if test="record.interestDate != null" >
+        interest_date = #{record.interestDate,jdbcType=DATE},
+      </if>
+      <if test="record.monthlyRepaymentDate != null" >
+        monthly_repayment_date = #{record.monthlyRepaymentDate,jdbcType=DATE},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultRate != null" >
+        default_rate = #{record.defaultRate,jdbcType=REAL},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.disclosureDate != null" >
+        disclosure_date = #{record.disclosureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.investmentStartDate != null" >
+        investment_start_date = #{record.investmentStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.registerDate != null" >
+        register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.investmentApplicationDate != null" >
+        investment_application_date = #{record.investmentApplicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fundingStyle != null" >
+        funding_style = #{record.fundingStyle,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActual != null" >
+        is_actual = #{record.isActual,jdbcType=INTEGER},
+      </if>
+      <if test="record.fundingType != null" >
+        funding_type = #{record.fundingType,jdbcType=INTEGER},
+      </if>
+      <if test="record.additionalInterestFlag != null" >
+        additional_interest_flag = #{record.additionalInterestFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.repaymentStatus != null" >
+        repayment_status = #{record.repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.depositStatus != null" >
+        deposit_status = #{record.depositStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionIp != null" >
+        session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subTitle != null" >
+        sub_title = #{record.subTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update funding_data_log
+    set idx = #{record.idx,jdbcType=INTEGER},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      visible = #{record.visible,jdbcType=INTEGER},
+      announced_amount = #{record.announcedAmount,jdbcType=INTEGER},
+      total_amount = #{record.totalAmount,jdbcType=INTEGER},
+      max_invest_amount = #{record.maxInvestAmount,jdbcType=INTEGER},
+      monthly_repayment_grace = #{record.monthlyRepaymentGrace,jdbcType=INTEGER},
+      monthly_repayment = #{record.monthlyRepayment,jdbcType=INTEGER},
+      interest_rate = #{record.interestRate,jdbcType=REAL},
+      accrued_interest_rate = #{record.accruedInterestRate,jdbcType=REAL},
+      funda_support_interest_rate = #{record.fundaSupportInterestRate,jdbcType=REAL},
+      repayment_method = #{record.repaymentMethod,jdbcType=CHAR},
+      loan_period = #{record.loanPeriod,jdbcType=INTEGER},
+      grace_period = #{record.gracePeriod,jdbcType=INTEGER},
+      contract_date = #{record.contractDate,jdbcType=DATE},
+      beginning_date = #{record.beginningDate,jdbcType=DATE},
+      interest_date = #{record.interestDate,jdbcType=DATE},
+      monthly_repayment_date = #{record.monthlyRepaymentDate,jdbcType=DATE},
+      score = #{record.score,jdbcType=INTEGER},
+      default_rate = #{record.defaultRate,jdbcType=REAL},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      disclosure_date = #{record.disclosureDate,jdbcType=TIMESTAMP},
+      investment_start_date = #{record.investmentStartDate,jdbcType=TIMESTAMP},
+      register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      investment_application_date = #{record.investmentApplicationDate,jdbcType=TIMESTAMP},
+      funding_style = #{record.fundingStyle,jdbcType=INTEGER},
+      is_actual = #{record.isActual,jdbcType=INTEGER},
+      funding_type = #{record.fundingType,jdbcType=INTEGER},
+      additional_interest_flag = #{record.additionalInterestFlag,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=CHAR},
+      repayment_status = #{record.repaymentStatus,jdbcType=CHAR},
+      deposit_status = #{record.depositStatus,jdbcType=CHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      sub_title = #{record.subTitle,jdbcType=LONGVARCHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update funding_data_log
+    set idx = #{record.idx,jdbcType=INTEGER},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      visible = #{record.visible,jdbcType=INTEGER},
+      announced_amount = #{record.announcedAmount,jdbcType=INTEGER},
+      total_amount = #{record.totalAmount,jdbcType=INTEGER},
+      max_invest_amount = #{record.maxInvestAmount,jdbcType=INTEGER},
+      monthly_repayment_grace = #{record.monthlyRepaymentGrace,jdbcType=INTEGER},
+      monthly_repayment = #{record.monthlyRepayment,jdbcType=INTEGER},
+      interest_rate = #{record.interestRate,jdbcType=REAL},
+      accrued_interest_rate = #{record.accruedInterestRate,jdbcType=REAL},
+      funda_support_interest_rate = #{record.fundaSupportInterestRate,jdbcType=REAL},
+      repayment_method = #{record.repaymentMethod,jdbcType=CHAR},
+      loan_period = #{record.loanPeriod,jdbcType=INTEGER},
+      grace_period = #{record.gracePeriod,jdbcType=INTEGER},
+      contract_date = #{record.contractDate,jdbcType=DATE},
+      beginning_date = #{record.beginningDate,jdbcType=DATE},
+      interest_date = #{record.interestDate,jdbcType=DATE},
+      monthly_repayment_date = #{record.monthlyRepaymentDate,jdbcType=DATE},
+      score = #{record.score,jdbcType=INTEGER},
+      default_rate = #{record.defaultRate,jdbcType=REAL},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      disclosure_date = #{record.disclosureDate,jdbcType=TIMESTAMP},
+      investment_start_date = #{record.investmentStartDate,jdbcType=TIMESTAMP},
+      register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      investment_application_date = #{record.investmentApplicationDate,jdbcType=TIMESTAMP},
+      funding_style = #{record.fundingStyle,jdbcType=INTEGER},
+      is_actual = #{record.isActual,jdbcType=INTEGER},
+      funding_type = #{record.fundingType,jdbcType=INTEGER},
+      additional_interest_flag = #{record.additionalInterestFlag,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=CHAR},
+      repayment_status = #{record.repaymentStatus,jdbcType=CHAR},
+      deposit_status = #{record.depositStatus,jdbcType=CHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      session_ip = #{record.sessionIp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.funding_data_logWithBLOBs" >
+    update funding_data_log
+    <set >
+      <if test="fundingIdx != null" >
+        funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="visible != null" >
+        visible = #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="announcedAmount != null" >
+        announced_amount = #{announcedAmount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="maxInvestAmount != null" >
+        max_invest_amount = #{maxInvestAmount,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyRepaymentGrace != null" >
+        monthly_repayment_grace = #{monthlyRepaymentGrace,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyRepayment != null" >
+        monthly_repayment = #{monthlyRepayment,jdbcType=INTEGER},
+      </if>
+      <if test="interestRate != null" >
+        interest_rate = #{interestRate,jdbcType=REAL},
+      </if>
+      <if test="accruedInterestRate != null" >
+        accrued_interest_rate = #{accruedInterestRate,jdbcType=REAL},
+      </if>
+      <if test="fundaSupportInterestRate != null" >
+        funda_support_interest_rate = #{fundaSupportInterestRate,jdbcType=REAL},
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method = #{repaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="loanPeriod != null" >
+        loan_period = #{loanPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="gracePeriod != null" >
+        grace_period = #{gracePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null" >
+        contract_date = #{contractDate,jdbcType=DATE},
+      </if>
+      <if test="beginningDate != null" >
+        beginning_date = #{beginningDate,jdbcType=DATE},
+      </if>
+      <if test="interestDate != null" >
+        interest_date = #{interestDate,jdbcType=DATE},
+      </if>
+      <if test="monthlyRepaymentDate != null" >
+        monthly_repayment_date = #{monthlyRepaymentDate,jdbcType=DATE},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="defaultRate != null" >
+        default_rate = #{defaultRate,jdbcType=REAL},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disclosureDate != null" >
+        disclosure_date = #{disclosureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investmentStartDate != null" >
+        investment_start_date = #{investmentStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investmentApplicationDate != null" >
+        investment_application_date = #{investmentApplicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fundingStyle != null" >
+        funding_style = #{fundingStyle,jdbcType=INTEGER},
+      </if>
+      <if test="isActual != null" >
+        is_actual = #{isActual,jdbcType=INTEGER},
+      </if>
+      <if test="fundingType != null" >
+        funding_type = #{fundingType,jdbcType=INTEGER},
+      </if>
+      <if test="additionalInterestFlag != null" >
+        additional_interest_flag = #{additionalInterestFlag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status = #{repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="depositStatus != null" >
+        deposit_status = #{depositStatus,jdbcType=CHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionIp != null" >
+        session_ip = #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.funding_data_logWithBLOBs" >
+    update funding_data_log
+    set funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      visible = #{visible,jdbcType=INTEGER},
+      announced_amount = #{announcedAmount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      max_invest_amount = #{maxInvestAmount,jdbcType=INTEGER},
+      monthly_repayment_grace = #{monthlyRepaymentGrace,jdbcType=INTEGER},
+      monthly_repayment = #{monthlyRepayment,jdbcType=INTEGER},
+      interest_rate = #{interestRate,jdbcType=REAL},
+      accrued_interest_rate = #{accruedInterestRate,jdbcType=REAL},
+      funda_support_interest_rate = #{fundaSupportInterestRate,jdbcType=REAL},
+      repayment_method = #{repaymentMethod,jdbcType=CHAR},
+      loan_period = #{loanPeriod,jdbcType=INTEGER},
+      grace_period = #{gracePeriod,jdbcType=INTEGER},
+      contract_date = #{contractDate,jdbcType=DATE},
+      beginning_date = #{beginningDate,jdbcType=DATE},
+      interest_date = #{interestDate,jdbcType=DATE},
+      monthly_repayment_date = #{monthlyRepaymentDate,jdbcType=DATE},
+      score = #{score,jdbcType=INTEGER},
+      default_rate = #{defaultRate,jdbcType=REAL},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      disclosure_date = #{disclosureDate,jdbcType=TIMESTAMP},
+      investment_start_date = #{investmentStartDate,jdbcType=TIMESTAMP},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      investment_application_date = #{investmentApplicationDate,jdbcType=TIMESTAMP},
+      funding_style = #{fundingStyle,jdbcType=INTEGER},
+      is_actual = #{isActual,jdbcType=INTEGER},
+      funding_type = #{fundingType,jdbcType=INTEGER},
+      additional_interest_flag = #{additionalInterestFlag,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      repayment_status = #{repaymentStatus,jdbcType=CHAR},
+      deposit_status = #{depositStatus,jdbcType=CHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      session_ip = #{sessionIp,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=LONGVARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.funding_data_log" >
+    update funding_data_log
+    set funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      visible = #{visible,jdbcType=INTEGER},
+      announced_amount = #{announcedAmount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      max_invest_amount = #{maxInvestAmount,jdbcType=INTEGER},
+      monthly_repayment_grace = #{monthlyRepaymentGrace,jdbcType=INTEGER},
+      monthly_repayment = #{monthlyRepayment,jdbcType=INTEGER},
+      interest_rate = #{interestRate,jdbcType=REAL},
+      accrued_interest_rate = #{accruedInterestRate,jdbcType=REAL},
+      funda_support_interest_rate = #{fundaSupportInterestRate,jdbcType=REAL},
+      repayment_method = #{repaymentMethod,jdbcType=CHAR},
+      loan_period = #{loanPeriod,jdbcType=INTEGER},
+      grace_period = #{gracePeriod,jdbcType=INTEGER},
+      contract_date = #{contractDate,jdbcType=DATE},
+      beginning_date = #{beginningDate,jdbcType=DATE},
+      interest_date = #{interestDate,jdbcType=DATE},
+      monthly_repayment_date = #{monthlyRepaymentDate,jdbcType=DATE},
+      score = #{score,jdbcType=INTEGER},
+      default_rate = #{defaultRate,jdbcType=REAL},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      disclosure_date = #{disclosureDate,jdbcType=TIMESTAMP},
+      investment_start_date = #{investmentStartDate,jdbcType=TIMESTAMP},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      investment_application_date = #{investmentApplicationDate,jdbcType=TIMESTAMP},
+      funding_style = #{fundingStyle,jdbcType=INTEGER},
+      is_actual = #{isActual,jdbcType=INTEGER},
+      funding_type = #{fundingType,jdbcType=INTEGER},
+      additional_interest_flag = #{additionalInterestFlag,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      repayment_status = #{repaymentStatus,jdbcType=CHAR},
+      deposit_status = #{depositStatus,jdbcType=CHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      session_ip = #{sessionIp,jdbcType=VARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.suggestedPolicyMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.suggestedPolicy" >
+    <result column="ref_idx" property="refIdx" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="monthlyRepay" property="monthlyrepay" jdbcType="DOUBLE" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="DOUBLE" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ref_idx, amount, monthlyRepay, period, rate, seq
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.suggestedPolicyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from suggestedPolicy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.suggestedPolicyExample" >
+    delete from suggestedPolicy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.suggestedPolicy" >
+    insert into suggestedPolicy (ref_idx, amount, monthlyRepay, 
+      period, rate, seq)
+    values (#{refIdx,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, #{monthlyrepay,jdbcType=DOUBLE},
+      #{period,jdbcType=INTEGER}, #{rate,jdbcType=DOUBLE}, #{seq,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.suggestedPolicy" >
+    insert into suggestedPolicy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="refIdx != null" >
+        ref_idx,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="monthlyrepay != null" >
+        monthlyRepay,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="refIdx != null" >
+        #{refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="monthlyrepay != null" >
+        #{monthlyrepay,jdbcType=DOUBLE},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.suggestedPolicyExample" resultType="java.lang.Integer" >
+    select count(*) from suggestedPolicy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update suggestedPolicy
+    <set >
+      <if test="record.refIdx != null" >
+        ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.monthlyrepay != null" >
+        monthlyRepay = #{record.monthlyrepay,jdbcType=DOUBLE},
+      </if>
+      <if test="record.period != null" >
+        period = #{record.period,jdbcType=INTEGER},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update suggestedPolicy
+    set ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=DOUBLE},
+      monthlyRepay = #{record.monthlyrepay,jdbcType=DOUBLE},
+      period = #{record.period,jdbcType=INTEGER},
+      rate = #{record.rate,jdbcType=DOUBLE},
+      seq = #{record.seq,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

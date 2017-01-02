@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.bank_accountMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.bank_account" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="account_holder" property="accountHolder" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="INTEGER" />
+    <result column="account_wo_hyphen" property="accountWoHyphen" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="is_virtual" property="isVirtual" jdbcType="BIT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="reg_num" property="regNum" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="validation_flag" property="validationFlag" jdbcType="INTEGER" />
+    <result column="toss_name" property="tossName" jdbcType="VARCHAR" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.bank_account" extends="BaseResultMap" >
+    <result column="toss_metadata" property="tossMetadata" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, account_holder, bank, bank_code, account_wo_hyphen, account, is_virtual, address, 
+    reg_num, comment, validation_flag, toss_name, last_update
+  </sql>
+  <sql id="Blob_Column_List" >
+    toss_metadata
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.bank_accountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bank_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.bank_accountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bank_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bank_account
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bank_account
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.bank_accountExample" >
+    delete from bank_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.bank_account" >
+    insert into bank_account (idx, account_holder, bank, 
+      bank_code, account_wo_hyphen, account, 
+      is_virtual, address, reg_num, 
+      comment, validation_flag, toss_name, 
+      last_update, toss_metadata)
+    values (#{idx,jdbcType=INTEGER}, #{accountHolder,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=INTEGER}, #{accountWoHyphen,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{isVirtual,jdbcType=BIT}, #{address,jdbcType=VARCHAR}, #{regNum,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{validationFlag,jdbcType=INTEGER}, #{tossName,jdbcType=VARCHAR}, 
+      #{lastUpdate,jdbcType=TIMESTAMP}, #{tossMetadata,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.bank_account" >
+    insert into bank_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="accountHolder != null" >
+        account_holder,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="accountWoHyphen != null" >
+        account_wo_hyphen,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="regNum != null" >
+        reg_num,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="validationFlag != null" >
+        validation_flag,
+      </if>
+      <if test="tossName != null" >
+        toss_name,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+      <if test="tossMetadata != null" >
+        toss_metadata,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="accountHolder != null" >
+        #{accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="accountWoHyphen != null" >
+        #{accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        #{isVirtual,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="regNum != null" >
+        #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="validationFlag != null" >
+        #{validationFlag,jdbcType=INTEGER},
+      </if>
+      <if test="tossName != null" >
+        #{tossName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tossMetadata != null" >
+        #{tossMetadata,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.bank_accountExample" resultType="java.lang.Integer" >
+    select count(*) from bank_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bank_account
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountHolder != null" >
+        account_holder = #{record.accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank != null" >
+        bank = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null" >
+        bank_code = #{record.bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountWoHyphen != null" >
+        account_wo_hyphen = #{record.accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.account != null" >
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isVirtual != null" >
+        is_virtual = #{record.isVirtual,jdbcType=BIT},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regNum != null" >
+        reg_num = #{record.regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validationFlag != null" >
+        validation_flag = #{record.validationFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.tossName != null" >
+        toss_name = #{record.tossName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdate != null" >
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tossMetadata != null" >
+        toss_metadata = #{record.tossMetadata,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update bank_account
+    set idx = #{record.idx,jdbcType=INTEGER},
+      account_holder = #{record.accountHolder,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      bank_code = #{record.bankCode,jdbcType=INTEGER},
+      account_wo_hyphen = #{record.accountWoHyphen,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      is_virtual = #{record.isVirtual,jdbcType=BIT},
+      address = #{record.address,jdbcType=VARCHAR},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      validation_flag = #{record.validationFlag,jdbcType=INTEGER},
+      toss_name = #{record.tossName,jdbcType=VARCHAR},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      toss_metadata = #{record.tossMetadata,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bank_account
+    set idx = #{record.idx,jdbcType=INTEGER},
+      account_holder = #{record.accountHolder,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      bank_code = #{record.bankCode,jdbcType=INTEGER},
+      account_wo_hyphen = #{record.accountWoHyphen,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      is_virtual = #{record.isVirtual,jdbcType=BIT},
+      address = #{record.address,jdbcType=VARCHAR},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      validation_flag = #{record.validationFlag,jdbcType=INTEGER},
+      toss_name = #{record.tossName,jdbcType=VARCHAR},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.bank_account" >
+    update bank_account
+    <set >
+      <if test="accountHolder != null" >
+        account_holder = #{accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="accountWoHyphen != null" >
+        account_wo_hyphen = #{accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual = #{isVirtual,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="regNum != null" >
+        reg_num = #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="validationFlag != null" >
+        validation_flag = #{validationFlag,jdbcType=INTEGER},
+      </if>
+      <if test="tossName != null" >
+        toss_name = #{tossName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tossMetadata != null" >
+        toss_metadata = #{tossMetadata,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.bank_account" >
+    update bank_account
+    set account_holder = #{accountHolder,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=INTEGER},
+      account_wo_hyphen = #{accountWoHyphen,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      is_virtual = #{isVirtual,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      validation_flag = #{validationFlag,jdbcType=INTEGER},
+      toss_name = #{tossName,jdbcType=VARCHAR},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      toss_metadata = #{tossMetadata,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.bank_account" >
+    update bank_account
+    set account_holder = #{accountHolder,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=INTEGER},
+      account_wo_hyphen = #{accountWoHyphen,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      is_virtual = #{isVirtual,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      validation_flag = #{validationFlag,jdbcType=INTEGER},
+      toss_name = #{tossName,jdbcType=VARCHAR},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

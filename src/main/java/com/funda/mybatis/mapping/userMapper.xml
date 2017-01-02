@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.userMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.user" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="CHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_email_ack" property="userEmailAck" jdbcType="INTEGER" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_phone_ack" property="userPhoneAck" jdbcType="INTEGER" />
+    <result column="user_birthdate" property="userBirthdate" jdbcType="DATE" />
+    <result column="user_category" property="userCategory" jdbcType="INTEGER" />
+    <result column="promotion_sms" property="promotionSms" jdbcType="CHAR" />
+    <result column="promotion_email" property="promotionEmail" jdbcType="CHAR" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="last_login_date" property="lastLoginDate" jdbcType="TIMESTAMP" />
+    <result column="is_admin" property="isAdmin" jdbcType="INTEGER" />
+    <result column="bank_account_idx" property="bankAccountIdx" jdbcType="INTEGER" />
+    <result column="sms_validation_key" property="smsValidationKey" jdbcType="VARCHAR" />
+    <result column="sms_validation_expire" property="smsValidationExpire" jdbcType="TIMESTAMP" />
+    <result column="email_validation_key" property="emailValidationKey" jdbcType="VARCHAR" />
+    <result column="email_validation_expire" property="emailValidationExpire" jdbcType="TIMESTAMP" />
+    <result column="reg_num" property="regNum" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="vip_card_no" property="vipCardNo" jdbcType="VARCHAR" />
+    <result column="reg_num_open" property="regNumOpen" jdbcType="VARCHAR" />
+    <result column="address_open" property="addressOpen" jdbcType="VARCHAR" />
+    <result column="withholding" property="withholding" jdbcType="CHAR" />
+    <result column="agree_terms" property="agreeTerms" jdbcType="CHAR" />
+    <result column="address_reward" property="addressReward" jdbcType="VARCHAR" />
+    <result column="phone_reward" property="phoneReward" jdbcType="VARCHAR" />
+    <result column="name_reward" property="nameReward" jdbcType="VARCHAR" />
+    <result column="event" property="event" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.userWithBLOBs" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+    <result column="image" property="image" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, user_id, user_password, user_name, user_gender, user_email, user_email_ack, 
+    user_phone, user_phone_ack, user_birthdate, user_category, promotion_sms, promotion_email, 
+    register_date, last_login_date, is_admin, bank_account_idx, sms_validation_key, sms_validation_expire, 
+    email_validation_key, email_validation_expire, reg_num, address, vip_card_no, reg_num_open, 
+    address_open, withholding, agree_terms, address_reward, phone_reward, name_reward, 
+    event, valid
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo, image
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.userExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.userExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.userExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.userWithBLOBs" >
+    insert into user (idx, user_id, user_password, 
+      user_name, user_gender, user_email, 
+      user_email_ack, user_phone, user_phone_ack, 
+      user_birthdate, user_category, promotion_sms, 
+      promotion_email, register_date, last_login_date, 
+      is_admin, bank_account_idx, sms_validation_key, 
+      sms_validation_expire, email_validation_key, 
+      email_validation_expire, reg_num, address, 
+      vip_card_no, reg_num_open, address_open, 
+      withholding, agree_terms, address_reward, 
+      phone_reward, name_reward, event, 
+      valid, memo, image
+      )
+    values (#{idx,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userGender,jdbcType=CHAR}, #{userEmail,jdbcType=VARCHAR}, 
+      #{userEmailAck,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, #{userPhoneAck,jdbcType=INTEGER}, 
+      #{userBirthdate,jdbcType=DATE}, #{userCategory,jdbcType=INTEGER}, #{promotionSms,jdbcType=CHAR}, 
+      #{promotionEmail,jdbcType=CHAR}, #{registerDate,jdbcType=TIMESTAMP}, #{lastLoginDate,jdbcType=TIMESTAMP}, 
+      #{isAdmin,jdbcType=INTEGER}, #{bankAccountIdx,jdbcType=INTEGER}, #{smsValidationKey,jdbcType=VARCHAR}, 
+      #{smsValidationExpire,jdbcType=TIMESTAMP}, #{emailValidationKey,jdbcType=VARCHAR}, 
+      #{emailValidationExpire,jdbcType=TIMESTAMP}, #{regNum,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{vipCardNo,jdbcType=VARCHAR}, #{regNumOpen,jdbcType=VARCHAR}, #{addressOpen,jdbcType=VARCHAR}, 
+      #{withholding,jdbcType=CHAR}, #{agreeTerms,jdbcType=CHAR}, #{addressReward,jdbcType=VARCHAR}, 
+      #{phoneReward,jdbcType=VARCHAR}, #{nameReward,jdbcType=VARCHAR}, #{event,jdbcType=INTEGER}, 
+      #{valid,jdbcType=CHAR}, #{memo,jdbcType=LONGVARCHAR}, #{image,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.userWithBLOBs" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userEmailAck != null" >
+        user_email_ack,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userPhoneAck != null" >
+        user_phone_ack,
+      </if>
+      <if test="userBirthdate != null" >
+        user_birthdate,
+      </if>
+      <if test="userCategory != null" >
+        user_category,
+      </if>
+      <if test="promotionSms != null" >
+        promotion_sms,
+      </if>
+      <if test="promotionEmail != null" >
+        promotion_email,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="lastLoginDate != null" >
+        last_login_date,
+      </if>
+      <if test="isAdmin != null" >
+        is_admin,
+      </if>
+      <if test="bankAccountIdx != null" >
+        bank_account_idx,
+      </if>
+      <if test="smsValidationKey != null" >
+        sms_validation_key,
+      </if>
+      <if test="smsValidationExpire != null" >
+        sms_validation_expire,
+      </if>
+      <if test="emailValidationKey != null" >
+        email_validation_key,
+      </if>
+      <if test="emailValidationExpire != null" >
+        email_validation_expire,
+      </if>
+      <if test="regNum != null" >
+        reg_num,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="vipCardNo != null" >
+        vip_card_no,
+      </if>
+      <if test="regNumOpen != null" >
+        reg_num_open,
+      </if>
+      <if test="addressOpen != null" >
+        address_open,
+      </if>
+      <if test="withholding != null" >
+        withholding,
+      </if>
+      <if test="agreeTerms != null" >
+        agree_terms,
+      </if>
+      <if test="addressReward != null" >
+        address_reward,
+      </if>
+      <if test="phoneReward != null" >
+        phone_reward,
+      </if>
+      <if test="nameReward != null" >
+        name_reward,
+      </if>
+      <if test="event != null" >
+        event,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailAck != null" >
+        #{userEmailAck,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneAck != null" >
+        #{userPhoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthdate != null" >
+        #{userBirthdate,jdbcType=DATE},
+      </if>
+      <if test="userCategory != null" >
+        #{userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="promotionSms != null" >
+        #{promotionSms,jdbcType=CHAR},
+      </if>
+      <if test="promotionEmail != null" >
+        #{promotionEmail,jdbcType=CHAR},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginDate != null" >
+        #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAdmin != null" >
+        #{isAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="bankAccountIdx != null" >
+        #{bankAccountIdx,jdbcType=INTEGER},
+      </if>
+      <if test="smsValidationKey != null" >
+        #{smsValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="smsValidationExpire != null" >
+        #{smsValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emailValidationKey != null" >
+        #{emailValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="emailValidationExpire != null" >
+        #{emailValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regNum != null" >
+        #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="vipCardNo != null" >
+        #{vipCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="regNumOpen != null" >
+        #{regNumOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="addressOpen != null" >
+        #{addressOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="withholding != null" >
+        #{withholding,jdbcType=CHAR},
+      </if>
+      <if test="agreeTerms != null" >
+        #{agreeTerms,jdbcType=CHAR},
+      </if>
+      <if test="addressReward != null" >
+        #{addressReward,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReward != null" >
+        #{phoneReward,jdbcType=VARCHAR},
+      </if>
+      <if test="nameReward != null" >
+        #{nameReward,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null" >
+        #{event,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.userExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        user_password = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGender != null" >
+        user_gender = #{record.userGender,jdbcType=CHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmailAck != null" >
+        user_email_ack = #{record.userEmailAck,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhoneAck != null" >
+        user_phone_ack = #{record.userPhoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="record.userBirthdate != null" >
+        user_birthdate = #{record.userBirthdate,jdbcType=DATE},
+      </if>
+      <if test="record.userCategory != null" >
+        user_category = #{record.userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.promotionSms != null" >
+        promotion_sms = #{record.promotionSms,jdbcType=CHAR},
+      </if>
+      <if test="record.promotionEmail != null" >
+        promotion_email = #{record.promotionEmail,jdbcType=CHAR},
+      </if>
+      <if test="record.registerDate != null" >
+        register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginDate != null" >
+        last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isAdmin != null" >
+        is_admin = #{record.isAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankAccountIdx != null" >
+        bank_account_idx = #{record.bankAccountIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsValidationKey != null" >
+        sms_validation_key = #{record.smsValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsValidationExpire != null" >
+        sms_validation_expire = #{record.smsValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.emailValidationKey != null" >
+        email_validation_key = #{record.emailValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailValidationExpire != null" >
+        email_validation_expire = #{record.emailValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regNum != null" >
+        reg_num = #{record.regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vipCardNo != null" >
+        vip_card_no = #{record.vipCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regNumOpen != null" >
+        reg_num_open = #{record.regNumOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressOpen != null" >
+        address_open = #{record.addressOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.withholding != null" >
+        withholding = #{record.withholding,jdbcType=CHAR},
+      </if>
+      <if test="record.agreeTerms != null" >
+        agree_terms = #{record.agreeTerms,jdbcType=CHAR},
+      </if>
+      <if test="record.addressReward != null" >
+        address_reward = #{record.addressReward,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneReward != null" >
+        phone_reward = #{record.phoneReward,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameReward != null" >
+        name_reward = #{record.nameReward,jdbcType=VARCHAR},
+      </if>
+      <if test="record.event != null" >
+        event = #{record.event,jdbcType=INTEGER},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=CHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update user
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_password = #{record.userPassword,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=CHAR},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_email_ack = #{record.userEmailAck,jdbcType=INTEGER},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_phone_ack = #{record.userPhoneAck,jdbcType=INTEGER},
+      user_birthdate = #{record.userBirthdate,jdbcType=DATE},
+      user_category = #{record.userCategory,jdbcType=INTEGER},
+      promotion_sms = #{record.promotionSms,jdbcType=CHAR},
+      promotion_email = #{record.promotionEmail,jdbcType=CHAR},
+      register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      is_admin = #{record.isAdmin,jdbcType=INTEGER},
+      bank_account_idx = #{record.bankAccountIdx,jdbcType=INTEGER},
+      sms_validation_key = #{record.smsValidationKey,jdbcType=VARCHAR},
+      sms_validation_expire = #{record.smsValidationExpire,jdbcType=TIMESTAMP},
+      email_validation_key = #{record.emailValidationKey,jdbcType=VARCHAR},
+      email_validation_expire = #{record.emailValidationExpire,jdbcType=TIMESTAMP},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      vip_card_no = #{record.vipCardNo,jdbcType=VARCHAR},
+      reg_num_open = #{record.regNumOpen,jdbcType=VARCHAR},
+      address_open = #{record.addressOpen,jdbcType=VARCHAR},
+      withholding = #{record.withholding,jdbcType=CHAR},
+      agree_terms = #{record.agreeTerms,jdbcType=CHAR},
+      address_reward = #{record.addressReward,jdbcType=VARCHAR},
+      phone_reward = #{record.phoneReward,jdbcType=VARCHAR},
+      name_reward = #{record.nameReward,jdbcType=VARCHAR},
+      event = #{record.event,jdbcType=INTEGER},
+      valid = #{record.valid,jdbcType=CHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR},
+      image = #{record.image,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_password = #{record.userPassword,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=CHAR},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_email_ack = #{record.userEmailAck,jdbcType=INTEGER},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_phone_ack = #{record.userPhoneAck,jdbcType=INTEGER},
+      user_birthdate = #{record.userBirthdate,jdbcType=DATE},
+      user_category = #{record.userCategory,jdbcType=INTEGER},
+      promotion_sms = #{record.promotionSms,jdbcType=CHAR},
+      promotion_email = #{record.promotionEmail,jdbcType=CHAR},
+      register_date = #{record.registerDate,jdbcType=TIMESTAMP},
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      is_admin = #{record.isAdmin,jdbcType=INTEGER},
+      bank_account_idx = #{record.bankAccountIdx,jdbcType=INTEGER},
+      sms_validation_key = #{record.smsValidationKey,jdbcType=VARCHAR},
+      sms_validation_expire = #{record.smsValidationExpire,jdbcType=TIMESTAMP},
+      email_validation_key = #{record.emailValidationKey,jdbcType=VARCHAR},
+      email_validation_expire = #{record.emailValidationExpire,jdbcType=TIMESTAMP},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      vip_card_no = #{record.vipCardNo,jdbcType=VARCHAR},
+      reg_num_open = #{record.regNumOpen,jdbcType=VARCHAR},
+      address_open = #{record.addressOpen,jdbcType=VARCHAR},
+      withholding = #{record.withholding,jdbcType=CHAR},
+      agree_terms = #{record.agreeTerms,jdbcType=CHAR},
+      address_reward = #{record.addressReward,jdbcType=VARCHAR},
+      phone_reward = #{record.phoneReward,jdbcType=VARCHAR},
+      name_reward = #{record.nameReward,jdbcType=VARCHAR},
+      event = #{record.event,jdbcType=INTEGER},
+      valid = #{record.valid,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.userWithBLOBs" >
+    update user
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailAck != null" >
+        user_email_ack = #{userEmailAck,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneAck != null" >
+        user_phone_ack = #{userPhoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthdate != null" >
+        user_birthdate = #{userBirthdate,jdbcType=DATE},
+      </if>
+      <if test="userCategory != null" >
+        user_category = #{userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="promotionSms != null" >
+        promotion_sms = #{promotionSms,jdbcType=CHAR},
+      </if>
+      <if test="promotionEmail != null" >
+        promotion_email = #{promotionEmail,jdbcType=CHAR},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginDate != null" >
+        last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAdmin != null" >
+        is_admin = #{isAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="bankAccountIdx != null" >
+        bank_account_idx = #{bankAccountIdx,jdbcType=INTEGER},
+      </if>
+      <if test="smsValidationKey != null" >
+        sms_validation_key = #{smsValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="smsValidationExpire != null" >
+        sms_validation_expire = #{smsValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emailValidationKey != null" >
+        email_validation_key = #{emailValidationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="emailValidationExpire != null" >
+        email_validation_expire = #{emailValidationExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regNum != null" >
+        reg_num = #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="vipCardNo != null" >
+        vip_card_no = #{vipCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="regNumOpen != null" >
+        reg_num_open = #{regNumOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="addressOpen != null" >
+        address_open = #{addressOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="withholding != null" >
+        withholding = #{withholding,jdbcType=CHAR},
+      </if>
+      <if test="agreeTerms != null" >
+        agree_terms = #{agreeTerms,jdbcType=CHAR},
+      </if>
+      <if test="addressReward != null" >
+        address_reward = #{addressReward,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReward != null" >
+        phone_reward = #{phoneReward,jdbcType=VARCHAR},
+      </if>
+      <if test="nameReward != null" >
+        name_reward = #{nameReward,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null" >
+        event = #{event,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.userWithBLOBs" >
+    update user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=CHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_email_ack = #{userEmailAck,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_phone_ack = #{userPhoneAck,jdbcType=INTEGER},
+      user_birthdate = #{userBirthdate,jdbcType=DATE},
+      user_category = #{userCategory,jdbcType=INTEGER},
+      promotion_sms = #{promotionSms,jdbcType=CHAR},
+      promotion_email = #{promotionEmail,jdbcType=CHAR},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      is_admin = #{isAdmin,jdbcType=INTEGER},
+      bank_account_idx = #{bankAccountIdx,jdbcType=INTEGER},
+      sms_validation_key = #{smsValidationKey,jdbcType=VARCHAR},
+      sms_validation_expire = #{smsValidationExpire,jdbcType=TIMESTAMP},
+      email_validation_key = #{emailValidationKey,jdbcType=VARCHAR},
+      email_validation_expire = #{emailValidationExpire,jdbcType=TIMESTAMP},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      vip_card_no = #{vipCardNo,jdbcType=VARCHAR},
+      reg_num_open = #{regNumOpen,jdbcType=VARCHAR},
+      address_open = #{addressOpen,jdbcType=VARCHAR},
+      withholding = #{withholding,jdbcType=CHAR},
+      agree_terms = #{agreeTerms,jdbcType=CHAR},
+      address_reward = #{addressReward,jdbcType=VARCHAR},
+      phone_reward = #{phoneReward,jdbcType=VARCHAR},
+      name_reward = #{nameReward,jdbcType=VARCHAR},
+      event = #{event,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=CHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR},
+      image = #{image,jdbcType=LONGVARBINARY}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.user" >
+    update user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=CHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_email_ack = #{userEmailAck,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_phone_ack = #{userPhoneAck,jdbcType=INTEGER},
+      user_birthdate = #{userBirthdate,jdbcType=DATE},
+      user_category = #{userCategory,jdbcType=INTEGER},
+      promotion_sms = #{promotionSms,jdbcType=CHAR},
+      promotion_email = #{promotionEmail,jdbcType=CHAR},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      is_admin = #{isAdmin,jdbcType=INTEGER},
+      bank_account_idx = #{bankAccountIdx,jdbcType=INTEGER},
+      sms_validation_key = #{smsValidationKey,jdbcType=VARCHAR},
+      sms_validation_expire = #{smsValidationExpire,jdbcType=TIMESTAMP},
+      email_validation_key = #{emailValidationKey,jdbcType=VARCHAR},
+      email_validation_expire = #{emailValidationExpire,jdbcType=TIMESTAMP},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      vip_card_no = #{vipCardNo,jdbcType=VARCHAR},
+      reg_num_open = #{regNumOpen,jdbcType=VARCHAR},
+      address_open = #{addressOpen,jdbcType=VARCHAR},
+      withholding = #{withholding,jdbcType=CHAR},
+      agree_terms = #{agreeTerms,jdbcType=CHAR},
+      address_reward = #{addressReward,jdbcType=VARCHAR},
+      phone_reward = #{phoneReward,jdbcType=VARCHAR},
+      name_reward = #{nameReward,jdbcType=VARCHAR},
+      event = #{event,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=CHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

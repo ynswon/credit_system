@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funda.mybatis.dao.application_data_seriesMapper">
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.application_data_series">
+    <id column="idx" jdbcType="INTEGER" property="idx" />
+    <result column="ref_idx" jdbcType="INTEGER" property="refIdx" />
+    <result column="seg_idx" jdbcType="VARCHAR" property="segIdx" />
+    <result column="series_idx" jdbcType="VARCHAR" property="seriesIdx" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="seg_name" jdbcType="VARCHAR" property="segName" />
+    <result column="series_name" jdbcType="VARCHAR" property="seriesName" />
+    <result column="detail_idx" jdbcType="VARCHAR" property="detailIdx" />
+    <result column="series_detail_idx" jdbcType="VARCHAR" property="seriesDetailIdx" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="seg_count" jdbcType="INTEGER" property="segCount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+      <!--
+    idx, ref_idx, seg_idx, series_idx, CASE  WHEN value  REGEXP '^[0-9]+\\.?[0-9]*$'
+                                        THEN convert(value, UNSIGNED)
+                                        ELSE value
+                                      END value, date, seg_name, series_name, detail_idx, series_detail_idx-->
+      ref_idx, seg_idx, series_idx, getKCBCode(seg_idx,series_name,value) as value , date, seg_name, series_name, detail_idx, series_detail_idx
+  </sql>
+  <select id="selectByExample" parameterType="com.funda.mybatis.model.application_data_seriesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from application_data_series
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+ <select id="selectByCount" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!-- select count(*) as count, seg_idx, detail_idx , seg_name
+	, (Select series_count from application_data B where B.value=A.seg_idx AND B.ref_idx=A.ref_idx limit 1) seg_count
+     from application_data_series A
+     Where  A.ref_idx=#{refIdx,jdbcType=INTEGER}
+      and A.series_idx=1
+      group by A.seg_idx, A.detail_idx
+-->
+
+    SELECT count(*) as count, seg_idx, detail_idx , seg_name
+	, (Select series_count from application_data B where B.value=A.seg_idx AND B.ref_idx=A.ref_idx limit 1) seg_count
+       FROM (
+       SELECT ref_idx, seg_idx, series_idx, value, date, seg_name, series_name, detail_idx, series_detail_idx
+       from application_data_series A
+     Where  A.ref_idx=#{refIdx,jdbcType=INTEGER}
+      and A.series_idx=1
+      GROUP BY ref_idx, seg_idx, series_idx, value, date, seg_name, series_name, detail_idx, series_detail_idx) A
+      group by A.seg_idx, A.detail_idx;
+ </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from application_data_series
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from application_data_series
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.application_data_seriesExample">
+    delete from application_data_series
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.application_data_series">
+    insert into application_data_series (idx, ref_idx, seg_idx, 
+      series_idx, value, date, 
+      seg_name, series_name, detail_idx, 
+      series_detail_idx)
+    values (#{idx,jdbcType=INTEGER}, #{refIdx,jdbcType=INTEGER}, #{segIdx,jdbcType=VARCHAR}, 
+      #{seriesIdx,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, 
+      #{segName,jdbcType=VARCHAR}, #{seriesName,jdbcType=VARCHAR}, #{detailIdx,jdbcType=VARCHAR}, 
+      #{seriesDetailIdx,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.application_data_series">
+    insert into application_data_series
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        idx,
+      </if>
+      <if test="refIdx != null">
+        ref_idx,
+      </if>
+      <if test="segIdx != null">
+        seg_idx,
+      </if>
+      <if test="seriesIdx != null">
+        series_idx,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="segName != null">
+        seg_name,
+      </if>
+      <if test="seriesName != null">
+        series_name,
+      </if>
+      <if test="detailIdx != null">
+        detail_idx,
+      </if>
+      <if test="seriesDetailIdx != null">
+        series_detail_idx,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="refIdx != null">
+        #{refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="segIdx != null">
+        #{segIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesIdx != null">
+        #{seriesIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="segName != null">
+        #{segName,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null">
+        #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailIdx != null">
+        #{detailIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesDetailIdx != null">
+        #{seriesDetailIdx,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.application_data_seriesExample" resultType="java.lang.Integer">
+    select count(*) from application_data_series
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update application_data_series
+    <set>
+      <if test="record.idx != null">
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.refIdx != null">
+        ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.segIdx != null">
+        seg_idx = #{record.segIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesIdx != null">
+        series_idx = #{record.seriesIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null">
+        value = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.segName != null">
+        seg_name = #{record.segName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesName != null">
+        series_name = #{record.seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailIdx != null">
+        detail_idx = #{record.detailIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesDetailIdx != null">
+        series_detail_idx = #{record.seriesDetailIdx,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update application_data_series
+    set idx = #{record.idx,jdbcType=INTEGER},
+      ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      seg_idx = #{record.segIdx,jdbcType=VARCHAR},
+      series_idx = #{record.seriesIdx,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      seg_name = #{record.segName,jdbcType=VARCHAR},
+      series_name = #{record.seriesName,jdbcType=VARCHAR},
+      detail_idx = #{record.detailIdx,jdbcType=VARCHAR},
+      series_detail_idx = #{record.seriesDetailIdx,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.application_data_series">
+    update application_data_series
+    <set>
+      <if test="refIdx != null">
+        ref_idx = #{refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="segIdx != null">
+        seg_idx = #{segIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesIdx != null">
+        series_idx = #{seriesIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="segName != null">
+        seg_name = #{segName,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null">
+        series_name = #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailIdx != null">
+        detail_idx = #{detailIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesDetailIdx != null">
+        series_detail_idx = #{seriesDetailIdx,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.application_data_series">
+    update application_data_series
+    set ref_idx = #{refIdx,jdbcType=INTEGER},
+      seg_idx = #{segIdx,jdbcType=VARCHAR},
+      series_idx = #{seriesIdx,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      seg_name = #{segName,jdbcType=VARCHAR},
+      series_name = #{seriesName,jdbcType=VARCHAR},
+      detail_idx = #{detailIdx,jdbcType=VARCHAR},
+      series_detail_idx = #{seriesDetailIdx,jdbcType=VARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>  
+</mapper>

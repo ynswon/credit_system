@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.schedule_debtorMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.schedule_debtor" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="INTEGER" />
+    <result column="funding_data_idx" property="fundingDataIdx" jdbcType="INTEGER" />
+    <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="principal" property="principal" jdbcType="INTEGER" />
+    <result column="interest" property="interest" jdbcType="INTEGER" />
+    <result column="overdue_interest" property="overdueInterest" jdbcType="INTEGER" />
+    <result column="payback_present_idx" property="paybackPresentIdx" jdbcType="INTEGER" />
+    <result column="payback_total_times" property="paybackTotalTimes" jdbcType="INTEGER" />
+    <result column="due_date" property="dueDate" jdbcType="DATE" />
+    <result column="repayment_status" property="repaymentStatus" jdbcType="CHAR" />
+    <result column="overdue_status" property="overdueStatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, store_idx, funding_data_idx, total_amount, principal, interest, overdue_interest, 
+    payback_present_idx, payback_total_times, due_date, repayment_status, overdue_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.schedule_debtorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from schedule_debtor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_debtor
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from schedule_debtor
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.schedule_debtorExample" >
+    delete from schedule_debtor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.schedule_debtor" >
+    insert into schedule_debtor (idx, store_idx, funding_data_idx, 
+      total_amount, principal, interest, 
+      overdue_interest, payback_present_idx, payback_total_times, 
+      due_date, repayment_status, overdue_status
+      )
+    values (#{idx,jdbcType=INTEGER}, #{storeIdx,jdbcType=INTEGER}, #{fundingDataIdx,jdbcType=INTEGER}, 
+      #{totalAmount,jdbcType=INTEGER}, #{principal,jdbcType=INTEGER}, #{interest,jdbcType=INTEGER}, 
+      #{overdueInterest,jdbcType=INTEGER}, #{paybackPresentIdx,jdbcType=INTEGER}, #{paybackTotalTimes,jdbcType=INTEGER}, 
+      #{dueDate,jdbcType=DATE}, #{repaymentStatus,jdbcType=CHAR}, #{overdueStatus,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.schedule_debtor" >
+    insert into schedule_debtor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="fundingDataIdx != null" >
+        funding_data_idx,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="interest != null" >
+        interest,
+      </if>
+      <if test="overdueInterest != null" >
+        overdue_interest,
+      </if>
+      <if test="paybackPresentIdx != null" >
+        payback_present_idx,
+      </if>
+      <if test="paybackTotalTimes != null" >
+        payback_total_times,
+      </if>
+      <if test="dueDate != null" >
+        due_date,
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status,
+      </if>
+      <if test="overdueStatus != null" >
+        overdue_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="fundingDataIdx != null" >
+        #{fundingDataIdx,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null" >
+        #{interest,jdbcType=INTEGER},
+      </if>
+      <if test="overdueInterest != null" >
+        #{overdueInterest,jdbcType=INTEGER},
+      </if>
+      <if test="paybackPresentIdx != null" >
+        #{paybackPresentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="paybackTotalTimes != null" >
+        #{paybackTotalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dueDate != null" >
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="repaymentStatus != null" >
+        #{repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="overdueStatus != null" >
+        #{overdueStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.schedule_debtorExample" resultType="java.lang.Integer" >
+    select count(*) from schedule_debtor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update schedule_debtor
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.fundingDataIdx != null" >
+        funding_data_idx = #{record.fundingDataIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalAmount != null" >
+        total_amount = #{record.totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null" >
+        interest = #{record.interest,jdbcType=INTEGER},
+      </if>
+      <if test="record.overdueInterest != null" >
+        overdue_interest = #{record.overdueInterest,jdbcType=INTEGER},
+      </if>
+      <if test="record.paybackPresentIdx != null" >
+        payback_present_idx = #{record.paybackPresentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.paybackTotalTimes != null" >
+        payback_total_times = #{record.paybackTotalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueDate != null" >
+        due_date = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.repaymentStatus != null" >
+        repayment_status = #{record.repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.overdueStatus != null" >
+        overdue_status = #{record.overdueStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update schedule_debtor
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      funding_data_idx = #{record.fundingDataIdx,jdbcType=INTEGER},
+      total_amount = #{record.totalAmount,jdbcType=INTEGER},
+      principal = #{record.principal,jdbcType=INTEGER},
+      interest = #{record.interest,jdbcType=INTEGER},
+      overdue_interest = #{record.overdueInterest,jdbcType=INTEGER},
+      payback_present_idx = #{record.paybackPresentIdx,jdbcType=INTEGER},
+      payback_total_times = #{record.paybackTotalTimes,jdbcType=INTEGER},
+      due_date = #{record.dueDate,jdbcType=DATE},
+      repayment_status = #{record.repaymentStatus,jdbcType=CHAR},
+      overdue_status = #{record.overdueStatus,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.schedule_debtor" >
+    update schedule_debtor
+    <set >
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="fundingDataIdx != null" >
+        funding_data_idx = #{fundingDataIdx,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null" >
+        interest = #{interest,jdbcType=INTEGER},
+      </if>
+      <if test="overdueInterest != null" >
+        overdue_interest = #{overdueInterest,jdbcType=INTEGER},
+      </if>
+      <if test="paybackPresentIdx != null" >
+        payback_present_idx = #{paybackPresentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="paybackTotalTimes != null" >
+        payback_total_times = #{paybackTotalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dueDate != null" >
+        due_date = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status = #{repaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="overdueStatus != null" >
+        overdue_status = #{overdueStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.schedule_debtor" >
+    update schedule_debtor
+    set store_idx = #{storeIdx,jdbcType=INTEGER},
+      funding_data_idx = #{fundingDataIdx,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      principal = #{principal,jdbcType=INTEGER},
+      interest = #{interest,jdbcType=INTEGER},
+      overdue_interest = #{overdueInterest,jdbcType=INTEGER},
+      payback_present_idx = #{paybackPresentIdx,jdbcType=INTEGER},
+      payback_total_times = #{paybackTotalTimes,jdbcType=INTEGER},
+      due_date = #{dueDate,jdbcType=DATE},
+      repayment_status = #{repaymentStatus,jdbcType=CHAR},
+      overdue_status = #{overdueStatus,jdbcType=CHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

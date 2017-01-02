@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.funda.mybatis.dao.application_dataMapper">
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.application_data">
+    <id column="idx" jdbcType="INTEGER" property="idx" />
+    <result column="ref_idx" jdbcType="INTEGER" property="refIdx" />
+    <result column="type_prefix" jdbcType="CHAR" property="typePrefix" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="type_idx" jdbcType="INTEGER" property="typeIdx" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="series_count" jdbcType="INTEGER" property="seriesCount" />
+    <result column="date" jdbcType="DATE" property="date" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.funda.mybatis.model.application_data">
+    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    idx, ref_idx, type_prefix, type, type_idx, value, series_count, date
+  </sql>
+  <sql id="Blob_Column_List">
+    memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.funda.mybatis.model.application_dataExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from application_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.funda.mybatis.model.application_dataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from application_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from application_data
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from application_data
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.application_dataExample">
+    delete from application_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.application_data">
+    insert into application_data (idx, ref_idx, type_prefix, 
+      type, type_idx, value, 
+      series_count, date, memo
+      )
+    values (#{idx,jdbcType=INTEGER}, #{refIdx,jdbcType=INTEGER}, #{typePrefix,jdbcType=CHAR}, 
+      #{type,jdbcType=VARCHAR}, #{typeIdx,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR}, 
+      #{seriesCount,jdbcType=INTEGER}, #{date,jdbcType=DATE}, #{memo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.application_data">
+
+    insert into application_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        idx,
+      </if>
+      <if test="refIdx != null">
+        ref_idx,
+      </if>
+      <if test="typePrefix != null">
+        type_prefix,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="typeIdx != null">
+        type_idx,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="seriesCount != null">
+        series_count,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="refIdx != null">
+        #{refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="typePrefix != null">
+        #{typePrefix,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeIdx != null">
+        #{typeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCount != null">
+        #{seriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.application_dataExample" resultType="java.lang.Integer">
+    select count(*) from application_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update application_data
+    <set>
+      <if test="record.idx != null">
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.refIdx != null">
+        ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.typePrefix != null">
+        type_prefix = #{record.typePrefix,jdbcType=CHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeIdx != null">
+        type_idx = #{record.typeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.value != null">
+        value = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesCount != null">
+        series_count = #{record.seriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update application_data
+    set idx = #{record.idx,jdbcType=INTEGER},
+      ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      type_prefix = #{record.typePrefix,jdbcType=CHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      type_idx = #{record.typeIdx,jdbcType=INTEGER},
+      value = #{record.value,jdbcType=VARCHAR},
+      series_count = #{record.seriesCount,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update application_data
+    set idx = #{record.idx,jdbcType=INTEGER},
+      ref_idx = #{record.refIdx,jdbcType=INTEGER},
+      type_prefix = #{record.typePrefix,jdbcType=CHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      type_idx = #{record.typeIdx,jdbcType=INTEGER},
+      value = #{record.value,jdbcType=VARCHAR},
+      series_count = #{record.seriesCount,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.application_data">
+    update application_data
+    <set>
+      <if test="refIdx != null">
+        ref_idx = #{refIdx,jdbcType=INTEGER},
+      </if>
+      <if test="typePrefix != null">
+        type_prefix = #{typePrefix,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeIdx != null">
+        type_idx = #{typeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCount != null">
+        series_count = #{seriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.application_data">
+    update application_data
+    set ref_idx = #{refIdx,jdbcType=INTEGER},
+      type_prefix = #{typePrefix,jdbcType=CHAR},
+      type = #{type,jdbcType=VARCHAR},
+      type_idx = #{typeIdx,jdbcType=INTEGER},
+      value = #{value,jdbcType=VARCHAR},
+      series_count = #{seriesCount,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.application_data">
+    update application_data
+    set ref_idx = #{refIdx,jdbcType=INTEGER},
+      type_prefix = #{typePrefix,jdbcType=CHAR},
+      type = #{type,jdbcType=VARCHAR},
+      type_idx = #{typeIdx,jdbcType=INTEGER},
+      value = #{value,jdbcType=VARCHAR},
+      series_count = #{seriesCount,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

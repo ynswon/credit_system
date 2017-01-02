@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.storeMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.store" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="address2" property="address2" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="type1" property="type1" jdbcType="VARCHAR" />
+    <result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="homepage" property="homepage" jdbcType="VARCHAR" />
+    <result column="capital" property="capital" jdbcType="INTEGER" />
+    <result column="debt" property="debt" jdbcType="INTEGER" />
+    <result column="monthly_sales" property="monthlySales" jdbcType="INTEGER" />
+    <result column="monthly_profit" property="monthlyProfit" jdbcType="INTEGER" />
+    <result column="register_number" property="registerNumber" jdbcType="VARCHAR" />
+    <result column="foundation_date" property="foundationDate" jdbcType="TIMESTAMP" />
+    <result column="operating_hour" property="operatingHour" jdbcType="VARCHAR" />
+    <result column="operating_period" property="operatingPeriod" jdbcType="VARCHAR" />
+    <result column="employee_number" property="employeeNumber" jdbcType="INTEGER" />
+    <result column="seat" property="seat" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="store_digit" property="storeDigit" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="CHAR" />
+    <result column="password_for_funda_agent" property="passwordForFundaAgent" jdbcType="VARCHAR" />
+    <result column="apikey_for_funda_agent" property="apikeyForFundaAgent" jdbcType="VARCHAR" />
+    <result column="apikey_for_funda_agent_private" property="apikeyForFundaAgentPrivate" jdbcType="VARCHAR" />
+    <result column="is_actual" property="isActual" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.store" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, store_code, user_idx, name, address, address2, type, type1, zipcode, homepage, 
+    capital, debt, monthly_sales, monthly_profit, register_number, foundation_date, operating_hour, 
+    operating_period, employee_number, seat, area, store_digit, valid, password_for_funda_agent, 
+    apikey_for_funda_agent, apikey_for_funda_agent_private, is_actual
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.storeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.storeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from store
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from store
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.storeExample" >
+    delete from store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.store" >
+    insert into store (idx, store_code, user_idx, 
+      name, address, address2, 
+      type, type1, zipcode, 
+      homepage, capital, debt, 
+      monthly_sales, monthly_profit, register_number, 
+      foundation_date, operating_hour, operating_period, 
+      employee_number, seat, area, 
+      store_digit, valid, password_for_funda_agent, 
+      apikey_for_funda_agent, apikey_for_funda_agent_private, 
+      is_actual, memo)
+    values (#{idx,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{userIdx,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{address2,jdbcType=VARCHAR}, 
+      #{type,jdbcType=CHAR}, #{type1,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, 
+      #{homepage,jdbcType=VARCHAR}, #{capital,jdbcType=INTEGER}, #{debt,jdbcType=INTEGER}, 
+      #{monthlySales,jdbcType=INTEGER}, #{monthlyProfit,jdbcType=INTEGER}, #{registerNumber,jdbcType=VARCHAR}, 
+      #{foundationDate,jdbcType=TIMESTAMP}, #{operatingHour,jdbcType=VARCHAR}, #{operatingPeriod,jdbcType=VARCHAR}, 
+      #{employeeNumber,jdbcType=INTEGER}, #{seat,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, 
+      #{storeDigit,jdbcType=VARCHAR}, #{valid,jdbcType=CHAR}, #{passwordForFundaAgent,jdbcType=VARCHAR}, 
+      #{apikeyForFundaAgent,jdbcType=VARCHAR}, #{apikeyForFundaAgentPrivate,jdbcType=VARCHAR}, 
+      #{isActual,jdbcType=INTEGER}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.store" >
+    insert into store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="storeCode != null" >
+        store_code,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="address2 != null" >
+        address2,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="type1 != null" >
+        type1,
+      </if>
+      <if test="zipcode != null" >
+        zipcode,
+      </if>
+      <if test="homepage != null" >
+        homepage,
+      </if>
+      <if test="capital != null" >
+        capital,
+      </if>
+      <if test="debt != null" >
+        debt,
+      </if>
+      <if test="monthlySales != null" >
+        monthly_sales,
+      </if>
+      <if test="monthlyProfit != null" >
+        monthly_profit,
+      </if>
+      <if test="registerNumber != null" >
+        register_number,
+      </if>
+      <if test="foundationDate != null" >
+        foundation_date,
+      </if>
+      <if test="operatingHour != null" >
+        operating_hour,
+      </if>
+      <if test="operatingPeriod != null" >
+        operating_period,
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number,
+      </if>
+      <if test="seat != null" >
+        seat,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="storeDigit != null" >
+        store_digit,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="passwordForFundaAgent != null" >
+        password_for_funda_agent,
+      </if>
+      <if test="apikeyForFundaAgent != null" >
+        apikey_for_funda_agent,
+      </if>
+      <if test="apikeyForFundaAgentPrivate != null" >
+        apikey_for_funda_agent_private,
+      </if>
+      <if test="isActual != null" >
+        is_actual,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="storeCode != null" >
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        #{address2,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="type1 != null" >
+        #{type1,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        #{homepage,jdbcType=VARCHAR},
+      </if>
+      <if test="capital != null" >
+        #{capital,jdbcType=INTEGER},
+      </if>
+      <if test="debt != null" >
+        #{debt,jdbcType=INTEGER},
+      </if>
+      <if test="monthlySales != null" >
+        #{monthlySales,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyProfit != null" >
+        #{monthlyProfit,jdbcType=INTEGER},
+      </if>
+      <if test="registerNumber != null" >
+        #{registerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="foundationDate != null" >
+        #{foundationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatingHour != null" >
+        #{operatingHour,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingPeriod != null" >
+        #{operatingPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="seat != null" >
+        #{seat,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDigit != null" >
+        #{storeDigit,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=CHAR},
+      </if>
+      <if test="passwordForFundaAgent != null" >
+        #{passwordForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="apikeyForFundaAgent != null" >
+        #{apikeyForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="apikeyForFundaAgentPrivate != null" >
+        #{apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      </if>
+      <if test="isActual != null" >
+        #{isActual,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.storeExample" resultType="java.lang.Integer" >
+    select count(*) from store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update store
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeCode != null" >
+        store_code = #{record.storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address2 != null" >
+        address2 = #{record.address2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.type1 != null" >
+        type1 = #{record.type1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zipcode != null" >
+        zipcode = #{record.zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homepage != null" >
+        homepage = #{record.homepage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.capital != null" >
+        capital = #{record.capital,jdbcType=INTEGER},
+      </if>
+      <if test="record.debt != null" >
+        debt = #{record.debt,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthlySales != null" >
+        monthly_sales = #{record.monthlySales,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthlyProfit != null" >
+        monthly_profit = #{record.monthlyProfit,jdbcType=INTEGER},
+      </if>
+      <if test="record.registerNumber != null" >
+        register_number = #{record.registerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foundationDate != null" >
+        foundation_date = #{record.foundationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatingHour != null" >
+        operating_hour = #{record.operatingHour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatingPeriod != null" >
+        operating_period = #{record.operatingPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeNumber != null" >
+        employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.seat != null" >
+        seat = #{record.seat,jdbcType=INTEGER},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeDigit != null" >
+        store_digit = #{record.storeDigit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=CHAR},
+      </if>
+      <if test="record.passwordForFundaAgent != null" >
+        password_for_funda_agent = #{record.passwordForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apikeyForFundaAgent != null" >
+        apikey_for_funda_agent = #{record.apikeyForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apikeyForFundaAgentPrivate != null" >
+        apikey_for_funda_agent_private = #{record.apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isActual != null" >
+        is_actual = #{record.isActual,jdbcType=INTEGER},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update store
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_code = #{record.storeCode,jdbcType=VARCHAR},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      address2 = #{record.address2,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=CHAR},
+      type1 = #{record.type1,jdbcType=VARCHAR},
+      zipcode = #{record.zipcode,jdbcType=VARCHAR},
+      homepage = #{record.homepage,jdbcType=VARCHAR},
+      capital = #{record.capital,jdbcType=INTEGER},
+      debt = #{record.debt,jdbcType=INTEGER},
+      monthly_sales = #{record.monthlySales,jdbcType=INTEGER},
+      monthly_profit = #{record.monthlyProfit,jdbcType=INTEGER},
+      register_number = #{record.registerNumber,jdbcType=VARCHAR},
+      foundation_date = #{record.foundationDate,jdbcType=TIMESTAMP},
+      operating_hour = #{record.operatingHour,jdbcType=VARCHAR},
+      operating_period = #{record.operatingPeriod,jdbcType=VARCHAR},
+      employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      seat = #{record.seat,jdbcType=INTEGER},
+      area = #{record.area,jdbcType=VARCHAR},
+      store_digit = #{record.storeDigit,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=CHAR},
+      password_for_funda_agent = #{record.passwordForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent = #{record.apikeyForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent_private = #{record.apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      is_actual = #{record.isActual,jdbcType=INTEGER},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update store
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_code = #{record.storeCode,jdbcType=VARCHAR},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      address2 = #{record.address2,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=CHAR},
+      type1 = #{record.type1,jdbcType=VARCHAR},
+      zipcode = #{record.zipcode,jdbcType=VARCHAR},
+      homepage = #{record.homepage,jdbcType=VARCHAR},
+      capital = #{record.capital,jdbcType=INTEGER},
+      debt = #{record.debt,jdbcType=INTEGER},
+      monthly_sales = #{record.monthlySales,jdbcType=INTEGER},
+      monthly_profit = #{record.monthlyProfit,jdbcType=INTEGER},
+      register_number = #{record.registerNumber,jdbcType=VARCHAR},
+      foundation_date = #{record.foundationDate,jdbcType=TIMESTAMP},
+      operating_hour = #{record.operatingHour,jdbcType=VARCHAR},
+      operating_period = #{record.operatingPeriod,jdbcType=VARCHAR},
+      employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      seat = #{record.seat,jdbcType=INTEGER},
+      area = #{record.area,jdbcType=VARCHAR},
+      store_digit = #{record.storeDigit,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=CHAR},
+      password_for_funda_agent = #{record.passwordForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent = #{record.apikeyForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent_private = #{record.apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      is_actual = #{record.isActual,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.store" >
+    update store
+    <set >
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        address2 = #{address2,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="type1 != null" >
+        type1 = #{type1,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        homepage = #{homepage,jdbcType=VARCHAR},
+      </if>
+      <if test="capital != null" >
+        capital = #{capital,jdbcType=INTEGER},
+      </if>
+      <if test="debt != null" >
+        debt = #{debt,jdbcType=INTEGER},
+      </if>
+      <if test="monthlySales != null" >
+        monthly_sales = #{monthlySales,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyProfit != null" >
+        monthly_profit = #{monthlyProfit,jdbcType=INTEGER},
+      </if>
+      <if test="registerNumber != null" >
+        register_number = #{registerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="foundationDate != null" >
+        foundation_date = #{foundationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatingHour != null" >
+        operating_hour = #{operatingHour,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingPeriod != null" >
+        operating_period = #{operatingPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number = #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="seat != null" >
+        seat = #{seat,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDigit != null" >
+        store_digit = #{storeDigit,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=CHAR},
+      </if>
+      <if test="passwordForFundaAgent != null" >
+        password_for_funda_agent = #{passwordForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="apikeyForFundaAgent != null" >
+        apikey_for_funda_agent = #{apikeyForFundaAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="apikeyForFundaAgentPrivate != null" >
+        apikey_for_funda_agent_private = #{apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      </if>
+      <if test="isActual != null" >
+        is_actual = #{isActual,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.store" >
+    update store
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      address2 = #{address2,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      type1 = #{type1,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      homepage = #{homepage,jdbcType=VARCHAR},
+      capital = #{capital,jdbcType=INTEGER},
+      debt = #{debt,jdbcType=INTEGER},
+      monthly_sales = #{monthlySales,jdbcType=INTEGER},
+      monthly_profit = #{monthlyProfit,jdbcType=INTEGER},
+      register_number = #{registerNumber,jdbcType=VARCHAR},
+      foundation_date = #{foundationDate,jdbcType=TIMESTAMP},
+      operating_hour = #{operatingHour,jdbcType=VARCHAR},
+      operating_period = #{operatingPeriod,jdbcType=VARCHAR},
+      employee_number = #{employeeNumber,jdbcType=INTEGER},
+      seat = #{seat,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      store_digit = #{storeDigit,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=CHAR},
+      password_for_funda_agent = #{passwordForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent = #{apikeyForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent_private = #{apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      is_actual = #{isActual,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.store" >
+    update store
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      address2 = #{address2,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      type1 = #{type1,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      homepage = #{homepage,jdbcType=VARCHAR},
+      capital = #{capital,jdbcType=INTEGER},
+      debt = #{debt,jdbcType=INTEGER},
+      monthly_sales = #{monthlySales,jdbcType=INTEGER},
+      monthly_profit = #{monthlyProfit,jdbcType=INTEGER},
+      register_number = #{registerNumber,jdbcType=VARCHAR},
+      foundation_date = #{foundationDate,jdbcType=TIMESTAMP},
+      operating_hour = #{operatingHour,jdbcType=VARCHAR},
+      operating_period = #{operatingPeriod,jdbcType=VARCHAR},
+      employee_number = #{employeeNumber,jdbcType=INTEGER},
+      seat = #{seat,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      store_digit = #{storeDigit,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=CHAR},
+      password_for_funda_agent = #{passwordForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent = #{apikeyForFundaAgent,jdbcType=VARCHAR},
+      apikey_for_funda_agent_private = #{apikeyForFundaAgentPrivate,jdbcType=VARCHAR},
+      is_actual = #{isActual,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

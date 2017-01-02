@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.refund_data_change_logMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.refund_data_change_log" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="bank_account_holder" property="bankAccountHolder" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="bank_account_wo_hyphen" property="bankAccountWoHyphen" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="INTEGER" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="reg_num" property="regNum" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="CHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="session_ip" property="sessionIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.refund_data_change_logWithBLOBs" extends="BaseResultMap" >
+    <result column="reason" property="reason" jdbcType="LONGVARCHAR" />
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, user_idx, bank_account_holder, bank_account, bank_account_wo_hyphen, bank_code, 
+    bank_name, address, reg_num, datetime, result, session_id, session_ip
+  </sql>
+  <sql id="Blob_Column_List" >
+    reason, memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.refund_data_change_logExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from refund_data_change_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.refund_data_change_logExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from refund_data_change_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from refund_data_change_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from refund_data_change_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.refund_data_change_logExample" >
+    delete from refund_data_change_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.refund_data_change_logWithBLOBs" >
+    insert into refund_data_change_log (idx, user_idx, bank_account_holder, 
+      bank_account, bank_account_wo_hyphen, bank_code, 
+      bank_name, address, reg_num, 
+      datetime, result, session_id, 
+      session_ip, reason, memo
+      )
+    values (#{idx,jdbcType=INTEGER}, #{userIdx,jdbcType=INTEGER}, #{bankAccountHolder,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{bankAccountWoHyphen,jdbcType=VARCHAR}, #{bankCode,jdbcType=INTEGER}, 
+      #{bankName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{regNum,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{result,jdbcType=CHAR}, #{sessionId,jdbcType=VARCHAR}, 
+      #{sessionIp,jdbcType=VARCHAR}, #{reason,jdbcType=LONGVARCHAR}, #{memo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.refund_data_change_logWithBLOBs" >
+    insert into refund_data_change_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="bankAccountHolder != null" >
+        bank_account_holder,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="bankAccountWoHyphen != null" >
+        bank_account_wo_hyphen,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="regNum != null" >
+        reg_num,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="sessionIp != null" >
+        session_ip,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="bankAccountHolder != null" >
+        #{bankAccountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountWoHyphen != null" >
+        #{bankAccountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="regNum != null" >
+        #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=CHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionIp != null" >
+        #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.refund_data_change_logExample" resultType="java.lang.Integer" >
+    select count(*) from refund_data_change_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update refund_data_change_log
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankAccountHolder != null" >
+        bank_account_holder = #{record.bankAccountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccount != null" >
+        bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccountWoHyphen != null" >
+        bank_account_wo_hyphen = #{record.bankAccountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null" >
+        bank_code = #{record.bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankName != null" >
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regNum != null" >
+        reg_num = #{record.regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=CHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionIp != null" >
+        session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update refund_data_change_log
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      bank_account_holder = #{record.bankAccountHolder,jdbcType=VARCHAR},
+      bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      bank_account_wo_hyphen = #{record.bankAccountWoHyphen,jdbcType=VARCHAR},
+      bank_code = #{record.bankCode,jdbcType=INTEGER},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=CHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=LONGVARCHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update refund_data_change_log
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      bank_account_holder = #{record.bankAccountHolder,jdbcType=VARCHAR},
+      bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      bank_account_wo_hyphen = #{record.bankAccountWoHyphen,jdbcType=VARCHAR},
+      bank_code = #{record.bankCode,jdbcType=INTEGER},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      reg_num = #{record.regNum,jdbcType=VARCHAR},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=CHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      session_ip = #{record.sessionIp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.refund_data_change_logWithBLOBs" >
+    update refund_data_change_log
+    <set >
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="bankAccountHolder != null" >
+        bank_account_holder = #{bankAccountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountWoHyphen != null" >
+        bank_account_wo_hyphen = #{bankAccountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="regNum != null" >
+        reg_num = #{regNum,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=CHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionIp != null" >
+        session_ip = #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.refund_data_change_logWithBLOBs" >
+    update refund_data_change_log
+    set user_idx = #{userIdx,jdbcType=INTEGER},
+      bank_account_holder = #{bankAccountHolder,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank_account_wo_hyphen = #{bankAccountWoHyphen,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=INTEGER},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=CHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      session_ip = #{sessionIp,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=LONGVARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.refund_data_change_log" >
+    update refund_data_change_log
+    set user_idx = #{userIdx,jdbcType=INTEGER},
+      bank_account_holder = #{bankAccountHolder,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank_account_wo_hyphen = #{bankAccountWoHyphen,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=INTEGER},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      reg_num = #{regNum,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=CHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      session_ip = #{sessionIp,jdbcType=VARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

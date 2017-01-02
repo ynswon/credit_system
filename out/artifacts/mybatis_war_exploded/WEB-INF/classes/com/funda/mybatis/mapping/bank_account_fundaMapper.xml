@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.bank_account_fundaMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.bank_account_funda" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="account_holder" property="accountHolder" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="INTEGER" />
+    <result column="account_wo_hyphen" property="accountWoHyphen" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="is_virtual" property="isVirtual" jdbcType="VARCHAR" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, account_holder, bank, account_wo_hyphen, account, is_virtual, user_idx
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.bank_account_fundaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bank_account_funda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bank_account_funda
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bank_account_funda
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.bank_account_fundaExample" >
+    delete from bank_account_funda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.bank_account_funda" >
+    insert into bank_account_funda (idx, account_holder, bank, 
+      account_wo_hyphen, account, is_virtual, 
+      user_idx)
+    values (#{idx,jdbcType=INTEGER}, #{accountHolder,jdbcType=VARCHAR}, #{bank,jdbcType=INTEGER}, 
+      #{accountWoHyphen,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{isVirtual,jdbcType=VARCHAR}, 
+      #{userIdx,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.bank_account_funda" >
+    insert into bank_account_funda
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="accountHolder != null" >
+        account_holder,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="accountWoHyphen != null" >
+        account_wo_hyphen,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="accountHolder != null" >
+        #{accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=INTEGER},
+      </if>
+      <if test="accountWoHyphen != null" >
+        #{accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        #{isVirtual,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.bank_account_fundaExample" resultType="java.lang.Integer" >
+    select count(*) from bank_account_funda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bank_account_funda
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountHolder != null" >
+        account_holder = #{record.accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank != null" >
+        bank = #{record.bank,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountWoHyphen != null" >
+        account_wo_hyphen = #{record.accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.account != null" >
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isVirtual != null" >
+        is_virtual = #{record.isVirtual,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bank_account_funda
+    set idx = #{record.idx,jdbcType=INTEGER},
+      account_holder = #{record.accountHolder,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=INTEGER},
+      account_wo_hyphen = #{record.accountWoHyphen,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      is_virtual = #{record.isVirtual,jdbcType=VARCHAR},
+      user_idx = #{record.userIdx,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.bank_account_funda" >
+    update bank_account_funda
+    <set >
+      <if test="accountHolder != null" >
+        account_holder = #{accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=INTEGER},
+      </if>
+      <if test="accountWoHyphen != null" >
+        account_wo_hyphen = #{accountWoHyphen,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual = #{isVirtual,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.bank_account_funda" >
+    update bank_account_funda
+    set account_holder = #{accountHolder,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=INTEGER},
+      account_wo_hyphen = #{accountWoHyphen,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      is_virtual = #{isVirtual,jdbcType=VARCHAR},
+      user_idx = #{userIdx,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

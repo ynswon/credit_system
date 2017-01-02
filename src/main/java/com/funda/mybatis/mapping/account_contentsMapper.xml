@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.account_contentsMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.account_contents" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="bankaccount" property="bankaccount" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deposit" property="deposit" jdbcType="INTEGER" />
+    <result column="withdrawal" property="withdrawal" jdbcType="INTEGER" />
+    <result column="correspondent" property="correspondent" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="INTEGER" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="INTEGER" />
+    <result column="va_idx" property="vaIdx" jdbcType="INTEGER" />
+    <result column="commission" property="commission" jdbcType="INTEGER" />
+    <result column="trans_status" property="transStatus" jdbcType="INTEGER" />
+    <result column="step" property="step" jdbcType="INTEGER" />
+    <result column="escape_duplication" property="escapeDuplication" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.account_contentsWithBLOBs" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+    <result column="meta_data" property="metaData" jdbcType="LONGVARCHAR" />
+    <result column="verification_text" property="verificationText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, datetime, bankaccount, name, deposit, withdrawal, correspondent, summary, balance, 
+    user_idx, store_idx, va_idx, commission, trans_status, step, escape_duplication
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo, meta_data, verification_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.account_contentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from account_contents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.account_contentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from account_contents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from account_contents
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account_contents
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.account_contentsExample" >
+    delete from account_contents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.account_contentsWithBLOBs" >
+    insert into account_contents (idx, datetime, bankaccount, 
+      name, deposit, withdrawal, 
+      correspondent, summary, balance, 
+      user_idx, store_idx, va_idx, 
+      commission, trans_status, step, 
+      escape_duplication, memo, meta_data, 
+      verification_text)
+    values (#{idx,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{bankaccount,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{deposit,jdbcType=INTEGER}, #{withdrawal,jdbcType=INTEGER}, 
+      #{correspondent,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{balance,jdbcType=INTEGER}, 
+      #{userIdx,jdbcType=INTEGER}, #{storeIdx,jdbcType=INTEGER}, #{vaIdx,jdbcType=INTEGER}, 
+      #{commission,jdbcType=INTEGER}, #{transStatus,jdbcType=INTEGER}, #{step,jdbcType=INTEGER}, 
+      #{escapeDuplication,jdbcType=INTEGER}, #{memo,jdbcType=LONGVARCHAR}, #{metaData,jdbcType=LONGVARCHAR}, 
+      #{verificationText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.account_contentsWithBLOBs" >
+    insert into account_contents
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="bankaccount != null" >
+        bankaccount,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="deposit != null" >
+        deposit,
+      </if>
+      <if test="withdrawal != null" >
+        withdrawal,
+      </if>
+      <if test="correspondent != null" >
+        correspondent,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="vaIdx != null" >
+        va_idx,
+      </if>
+      <if test="commission != null" >
+        commission,
+      </if>
+      <if test="transStatus != null" >
+        trans_status,
+      </if>
+      <if test="step != null" >
+        step,
+      </if>
+      <if test="escapeDuplication != null" >
+        escape_duplication,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="metaData != null" >
+        meta_data,
+      </if>
+      <if test="verificationText != null" >
+        verification_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankaccount != null" >
+        #{bankaccount,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawal != null" >
+        #{withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="correspondent != null" >
+        #{correspondent,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="vaIdx != null" >
+        #{vaIdx,jdbcType=INTEGER},
+      </if>
+      <if test="commission != null" >
+        #{commission,jdbcType=INTEGER},
+      </if>
+      <if test="transStatus != null" >
+        #{transStatus,jdbcType=INTEGER},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=INTEGER},
+      </if>
+      <if test="escapeDuplication != null" >
+        #{escapeDuplication,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="metaData != null" >
+        #{metaData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="verificationText != null" >
+        #{verificationText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.account_contentsExample" resultType="java.lang.Integer" >
+    select count(*) from account_contents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_contents
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bankaccount != null" >
+        bankaccount = #{record.bankaccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deposit != null" >
+        deposit = #{record.deposit,jdbcType=INTEGER},
+      </if>
+      <if test="record.withdrawal != null" >
+        withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="record.correspondent != null" >
+        correspondent = #{record.correspondent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=INTEGER},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.vaIdx != null" >
+        va_idx = #{record.vaIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.commission != null" >
+        commission = #{record.commission,jdbcType=INTEGER},
+      </if>
+      <if test="record.transStatus != null" >
+        trans_status = #{record.transStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.step != null" >
+        step = #{record.step,jdbcType=INTEGER},
+      </if>
+      <if test="record.escapeDuplication != null" >
+        escape_duplication = #{record.escapeDuplication,jdbcType=INTEGER},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.metaData != null" >
+        meta_data = #{record.metaData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.verificationText != null" >
+        verification_text = #{record.verificationText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update account_contents
+    set idx = #{record.idx,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      bankaccount = #{record.bankaccount,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      correspondent = #{record.correspondent,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      va_idx = #{record.vaIdx,jdbcType=INTEGER},
+      commission = #{record.commission,jdbcType=INTEGER},
+      trans_status = #{record.transStatus,jdbcType=INTEGER},
+      step = #{record.step,jdbcType=INTEGER},
+      escape_duplication = #{record.escapeDuplication,jdbcType=INTEGER},
+      memo = #{record.memo,jdbcType=LONGVARCHAR},
+      meta_data = #{record.metaData,jdbcType=LONGVARCHAR},
+      verification_text = #{record.verificationText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_contents
+    set idx = #{record.idx,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      bankaccount = #{record.bankaccount,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      correspondent = #{record.correspondent,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      va_idx = #{record.vaIdx,jdbcType=INTEGER},
+      commission = #{record.commission,jdbcType=INTEGER},
+      trans_status = #{record.transStatus,jdbcType=INTEGER},
+      step = #{record.step,jdbcType=INTEGER},
+      escape_duplication = #{record.escapeDuplication,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.account_contentsWithBLOBs" >
+    update account_contents
+    <set >
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankaccount != null" >
+        bankaccount = #{bankaccount,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        deposit = #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawal != null" >
+        withdrawal = #{withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="correspondent != null" >
+        correspondent = #{correspondent,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="vaIdx != null" >
+        va_idx = #{vaIdx,jdbcType=INTEGER},
+      </if>
+      <if test="commission != null" >
+        commission = #{commission,jdbcType=INTEGER},
+      </if>
+      <if test="transStatus != null" >
+        trans_status = #{transStatus,jdbcType=INTEGER},
+      </if>
+      <if test="step != null" >
+        step = #{step,jdbcType=INTEGER},
+      </if>
+      <if test="escapeDuplication != null" >
+        escape_duplication = #{escapeDuplication,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="metaData != null" >
+        meta_data = #{metaData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="verificationText != null" >
+        verification_text = #{verificationText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.account_contentsWithBLOBs" >
+    update account_contents
+    set datetime = #{datetime,jdbcType=TIMESTAMP},
+      bankaccount = #{bankaccount,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      deposit = #{deposit,jdbcType=INTEGER},
+      withdrawal = #{withdrawal,jdbcType=INTEGER},
+      correspondent = #{correspondent,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=INTEGER},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      va_idx = #{vaIdx,jdbcType=INTEGER},
+      commission = #{commission,jdbcType=INTEGER},
+      trans_status = #{transStatus,jdbcType=INTEGER},
+      step = #{step,jdbcType=INTEGER},
+      escape_duplication = #{escapeDuplication,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=LONGVARCHAR},
+      meta_data = #{metaData,jdbcType=LONGVARCHAR},
+      verification_text = #{verificationText,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.account_contents" >
+    update account_contents
+    set datetime = #{datetime,jdbcType=TIMESTAMP},
+      bankaccount = #{bankaccount,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      deposit = #{deposit,jdbcType=INTEGER},
+      withdrawal = #{withdrawal,jdbcType=INTEGER},
+      correspondent = #{correspondent,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=INTEGER},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      va_idx = #{vaIdx,jdbcType=INTEGER},
+      commission = #{commission,jdbcType=INTEGER},
+      trans_status = #{transStatus,jdbcType=INTEGER},
+      step = #{step,jdbcType=INTEGER},
+      escape_duplication = #{escapeDuplication,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

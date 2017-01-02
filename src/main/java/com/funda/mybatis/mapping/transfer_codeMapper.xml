@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.transfer_codeMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.transfer_code" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="common_code" property="commonCode" jdbcType="VARCHAR" />
+    <result column="code_increment" property="codeIncrement" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="requested_datetime" property="requestedDatetime" jdbcType="TIMESTAMP" />
+    <result column="funding_idx" property="fundingIdx" jdbcType="INTEGER" />
+    <result column="repayment_idx" property="repaymentIdx" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.transfer_codeWithBLOBs" extends="BaseResultMap" >
+    <result column="metadata" property="metadata" jdbcType="LONGVARCHAR" />
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, common_code, code_increment, code, session_id, requested_datetime, funding_idx, 
+    repayment_idx, result
+  </sql>
+  <sql id="Blob_Column_List" >
+    metadata, memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.transfer_codeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from transfer_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.transfer_codeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from transfer_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from transfer_code
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from transfer_code
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.transfer_codeExample" >
+    delete from transfer_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.transfer_codeWithBLOBs" >
+    insert into transfer_code (idx, common_code, code_increment, 
+      code, session_id, requested_datetime, 
+      funding_idx, repayment_idx, result, 
+      metadata, memo)
+    values (#{idx,jdbcType=INTEGER}, #{commonCode,jdbcType=VARCHAR}, #{codeIncrement,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, #{requestedDatetime,jdbcType=TIMESTAMP}, 
+      #{fundingIdx,jdbcType=INTEGER}, #{repaymentIdx,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      #{metadata,jdbcType=LONGVARCHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.transfer_codeWithBLOBs" >
+    insert into transfer_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="commonCode != null" >
+        common_code,
+      </if>
+      <if test="codeIncrement != null" >
+        code_increment,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="requestedDatetime != null" >
+        requested_datetime,
+      </if>
+      <if test="fundingIdx != null" >
+        funding_idx,
+      </if>
+      <if test="repaymentIdx != null" >
+        repayment_idx,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="metadata != null" >
+        metadata,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="commonCode != null" >
+        #{commonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="codeIncrement != null" >
+        #{codeIncrement,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="requestedDatetime != null" >
+        #{requestedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fundingIdx != null" >
+        #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentIdx != null" >
+        #{repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="metadata != null" >
+        #{metadata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.transfer_codeExample" resultType="java.lang.Integer" >
+    select count(*) from transfer_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transfer_code
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.commonCode != null" >
+        common_code = #{record.commonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeIncrement != null" >
+        code_increment = #{record.codeIncrement,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestedDatetime != null" >
+        requested_datetime = #{record.requestedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fundingIdx != null" >
+        funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.repaymentIdx != null" >
+        repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=INTEGER},
+      </if>
+      <if test="record.metadata != null" >
+        metadata = #{record.metadata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update transfer_code
+    set idx = #{record.idx,jdbcType=INTEGER},
+      common_code = #{record.commonCode,jdbcType=VARCHAR},
+      code_increment = #{record.codeIncrement,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      requested_datetime = #{record.requestedDatetime,jdbcType=TIMESTAMP},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      result = #{record.result,jdbcType=INTEGER},
+      metadata = #{record.metadata,jdbcType=LONGVARCHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transfer_code
+    set idx = #{record.idx,jdbcType=INTEGER},
+      common_code = #{record.commonCode,jdbcType=VARCHAR},
+      code_increment = #{record.codeIncrement,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      requested_datetime = #{record.requestedDatetime,jdbcType=TIMESTAMP},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      result = #{record.result,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.transfer_codeWithBLOBs" >
+    update transfer_code
+    <set >
+      <if test="commonCode != null" >
+        common_code = #{commonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="codeIncrement != null" >
+        code_increment = #{codeIncrement,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="requestedDatetime != null" >
+        requested_datetime = #{requestedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fundingIdx != null" >
+        funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentIdx != null" >
+        repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="metadata != null" >
+        metadata = #{metadata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.transfer_codeWithBLOBs" >
+    update transfer_code
+    set common_code = #{commonCode,jdbcType=VARCHAR},
+      code_increment = #{codeIncrement,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      requested_datetime = #{requestedDatetime,jdbcType=TIMESTAMP},
+      funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      metadata = #{metadata,jdbcType=LONGVARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.transfer_code" >
+    update transfer_code
+    set common_code = #{commonCode,jdbcType=VARCHAR},
+      code_increment = #{codeIncrement,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      requested_datetime = #{requestedDatetime,jdbcType=TIMESTAMP},
+      funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

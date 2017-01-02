@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.coupon_dataMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.coupon_data" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="interest_rate" property="interestRate" jdbcType="REAL" />
+    <result column="interest_ratio" property="interestRatio" jdbcType="REAL" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.coupon_data" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, store_idx, title, amount, interest_rate, interest_ratio, type, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.coupon_dataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.coupon_dataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from coupon_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon_data
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from coupon_data
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.coupon_dataExample" >
+    delete from coupon_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.coupon_data" >
+    insert into coupon_data (idx, store_idx, title, 
+      amount, interest_rate, interest_ratio, 
+      type, status, memo)
+    values (#{idx,jdbcType=INTEGER}, #{storeIdx,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{interestRate,jdbcType=REAL}, #{interestRatio,jdbcType=REAL}, 
+      #{type,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.coupon_data" >
+    insert into coupon_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="interestRate != null" >
+        interest_rate,
+      </if>
+      <if test="interestRatio != null" >
+        interest_ratio,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="interestRate != null" >
+        #{interestRate,jdbcType=REAL},
+      </if>
+      <if test="interestRatio != null" >
+        #{interestRatio,jdbcType=REAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.coupon_dataExample" resultType="java.lang.Integer" >
+    select count(*) from coupon_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update coupon_data
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.interestRate != null" >
+        interest_rate = #{record.interestRate,jdbcType=REAL},
+      </if>
+      <if test="record.interestRatio != null" >
+        interest_ratio = #{record.interestRatio,jdbcType=REAL},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update coupon_data
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      interest_rate = #{record.interestRate,jdbcType=REAL},
+      interest_ratio = #{record.interestRatio,jdbcType=REAL},
+      type = #{record.type,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update coupon_data
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      interest_rate = #{record.interestRate,jdbcType=REAL},
+      interest_ratio = #{record.interestRatio,jdbcType=REAL},
+      type = #{record.type,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.coupon_data" >
+    update coupon_data
+    <set >
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="interestRate != null" >
+        interest_rate = #{interestRate,jdbcType=REAL},
+      </if>
+      <if test="interestRatio != null" >
+        interest_ratio = #{interestRatio,jdbcType=REAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.coupon_data" >
+    update coupon_data
+    set store_idx = #{storeIdx,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      interest_rate = #{interestRate,jdbcType=REAL},
+      interest_ratio = #{interestRatio,jdbcType=REAL},
+      type = #{type,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.coupon_data" >
+    update coupon_data
+    set store_idx = #{storeIdx,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      interest_rate = #{interestRate,jdbcType=REAL},
+      interest_ratio = #{interestRatio,jdbcType=REAL},
+      type = #{type,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.transfer_listMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.transfer_list" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="transfer_id" property="transferId" jdbcType="VARCHAR" />
+    <result column="transfer_code" property="transferCode" jdbcType="VARCHAR" />
+    <result column="funding_idx" property="fundingIdx" jdbcType="INTEGER" />
+    <result column="repayment_idx" property="repaymentIdx" jdbcType="INTEGER" />
+    <result column="withdrawal_idx" property="withdrawalIdx" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="transfer_status" property="transferStatus" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.transfer_list" extends="BaseResultMap" >
+    <result column="meta_data" property="metaData" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, transfer_id, transfer_code, funding_idx, repayment_idx, withdrawal_idx, user_id, 
+    session_id, transfer_status, datetime, result
+  </sql>
+  <sql id="Blob_Column_List" >
+    meta_data
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.transfer_listExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from transfer_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.transfer_listExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from transfer_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from transfer_list
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from transfer_list
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.transfer_listExample" >
+    delete from transfer_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.transfer_list" >
+    insert into transfer_list (idx, transfer_id, transfer_code, 
+      funding_idx, repayment_idx, withdrawal_idx, 
+      user_id, session_id, transfer_status, 
+      datetime, result, meta_data
+      )
+    values (#{idx,jdbcType=INTEGER}, #{transferId,jdbcType=VARCHAR}, #{transferCode,jdbcType=VARCHAR}, 
+      #{fundingIdx,jdbcType=INTEGER}, #{repaymentIdx,jdbcType=INTEGER}, #{withdrawalIdx,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, #{transferStatus,jdbcType=INTEGER}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{result,jdbcType=INTEGER}, #{metaData,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.transfer_list" >
+    insert into transfer_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="transferId != null" >
+        transfer_id,
+      </if>
+      <if test="transferCode != null" >
+        transfer_code,
+      </if>
+      <if test="fundingIdx != null" >
+        funding_idx,
+      </if>
+      <if test="repaymentIdx != null" >
+        repayment_idx,
+      </if>
+      <if test="withdrawalIdx != null" >
+        withdrawal_idx,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="transferStatus != null" >
+        transfer_status,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="metaData != null" >
+        meta_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="transferId != null" >
+        #{transferId,jdbcType=VARCHAR},
+      </if>
+      <if test="transferCode != null" >
+        #{transferCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingIdx != null" >
+        #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentIdx != null" >
+        #{repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawalIdx != null" >
+        #{withdrawalIdx,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="transferStatus != null" >
+        #{transferStatus,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="metaData != null" >
+        #{metaData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.transfer_listExample" resultType="java.lang.Integer" >
+    select count(*) from transfer_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transfer_list
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferId != null" >
+        transfer_id = #{record.transferId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferCode != null" >
+        transfer_code = #{record.transferCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundingIdx != null" >
+        funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.repaymentIdx != null" >
+        repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.withdrawalIdx != null" >
+        withdrawal_idx = #{record.withdrawalIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferStatus != null" >
+        transfer_status = #{record.transferStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=INTEGER},
+      </if>
+      <if test="record.metaData != null" >
+        meta_data = #{record.metaData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update transfer_list
+    set idx = #{record.idx,jdbcType=INTEGER},
+      transfer_id = #{record.transferId,jdbcType=VARCHAR},
+      transfer_code = #{record.transferCode,jdbcType=VARCHAR},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      withdrawal_idx = #{record.withdrawalIdx,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      transfer_status = #{record.transferStatus,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=INTEGER},
+      meta_data = #{record.metaData,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transfer_list
+    set idx = #{record.idx,jdbcType=INTEGER},
+      transfer_id = #{record.transferId,jdbcType=VARCHAR},
+      transfer_code = #{record.transferCode,jdbcType=VARCHAR},
+      funding_idx = #{record.fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{record.repaymentIdx,jdbcType=INTEGER},
+      withdrawal_idx = #{record.withdrawalIdx,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      transfer_status = #{record.transferStatus,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.transfer_list" >
+    update transfer_list
+    <set >
+      <if test="transferId != null" >
+        transfer_id = #{transferId,jdbcType=VARCHAR},
+      </if>
+      <if test="transferCode != null" >
+        transfer_code = #{transferCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingIdx != null" >
+        funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentIdx != null" >
+        repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawalIdx != null" >
+        withdrawal_idx = #{withdrawalIdx,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="transferStatus != null" >
+        transfer_status = #{transferStatus,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="metaData != null" >
+        meta_data = #{metaData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.transfer_list" >
+    update transfer_list
+    set transfer_id = #{transferId,jdbcType=VARCHAR},
+      transfer_code = #{transferCode,jdbcType=VARCHAR},
+      funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      withdrawal_idx = #{withdrawalIdx,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      transfer_status = #{transferStatus,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER},
+      meta_data = #{metaData,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.transfer_list" >
+    update transfer_list
+    set transfer_id = #{transferId,jdbcType=VARCHAR},
+      transfer_code = #{transferCode,jdbcType=VARCHAR},
+      funding_idx = #{fundingIdx,jdbcType=INTEGER},
+      repayment_idx = #{repaymentIdx,jdbcType=INTEGER},
+      withdrawal_idx = #{withdrawalIdx,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      transfer_status = #{transferStatus,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

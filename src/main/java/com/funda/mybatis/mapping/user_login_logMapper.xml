@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.user_login_logMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.user_login_log" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tried_password" property="triedPassword" jdbcType="VARCHAR" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="session_ip" property="sessionIp" jdbcType="VARCHAR" />
+    <result column="using_super_password" property="usingSuperPassword" jdbcType="CHAR" />
+    <result column="login_datetime" property="loginDatetime" jdbcType="TIMESTAMP" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="referer" property="referer" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="login_success" property="loginSuccess" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, user_id, tried_password, user_idx, session_ip, using_super_password, login_datetime, 
+    browser, os, referer, target, login_success
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.user_login_logExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_login_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_login_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_login_log
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.user_login_logExample" >
+    delete from user_login_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.user_login_log" >
+    insert into user_login_log (idx, user_id, tried_password, 
+      user_idx, session_ip, using_super_password, 
+      login_datetime, browser, os, 
+      referer, target, login_success
+      )
+    values (#{idx,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{triedPassword,jdbcType=VARCHAR}, 
+      #{userIdx,jdbcType=INTEGER}, #{sessionIp,jdbcType=VARCHAR}, #{usingSuperPassword,jdbcType=CHAR}, 
+      #{loginDatetime,jdbcType=TIMESTAMP}, #{browser,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, 
+      #{referer,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, #{loginSuccess,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.user_login_log" >
+    insert into user_login_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="triedPassword != null" >
+        tried_password,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="sessionIp != null" >
+        session_ip,
+      </if>
+      <if test="usingSuperPassword != null" >
+        using_super_password,
+      </if>
+      <if test="loginDatetime != null" >
+        login_datetime,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="referer != null" >
+        referer,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="loginSuccess != null" >
+        login_success,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="triedPassword != null" >
+        #{triedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="sessionIp != null" >
+        #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="usingSuperPassword != null" >
+        #{usingSuperPassword,jdbcType=CHAR},
+      </if>
+      <if test="loginDatetime != null" >
+        #{loginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="referer != null" >
+        #{referer,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="loginSuccess != null" >
+        #{loginSuccess,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.user_login_logExample" resultType="java.lang.Integer" >
+    select count(*) from user_login_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_login_log
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.triedPassword != null" >
+        tried_password = #{record.triedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.sessionIp != null" >
+        session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usingSuperPassword != null" >
+        using_super_password = #{record.usingSuperPassword,jdbcType=CHAR},
+      </if>
+      <if test="record.loginDatetime != null" >
+        login_datetime = #{record.loginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.os != null" >
+        os = #{record.os,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referer != null" >
+        referer = #{record.referer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.target != null" >
+        target = #{record.target,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginSuccess != null" >
+        login_success = #{record.loginSuccess,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_login_log
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      tried_password = #{record.triedPassword,jdbcType=VARCHAR},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      session_ip = #{record.sessionIp,jdbcType=VARCHAR},
+      using_super_password = #{record.usingSuperPassword,jdbcType=CHAR},
+      login_datetime = #{record.loginDatetime,jdbcType=TIMESTAMP},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      os = #{record.os,jdbcType=VARCHAR},
+      referer = #{record.referer,jdbcType=VARCHAR},
+      target = #{record.target,jdbcType=VARCHAR},
+      login_success = #{record.loginSuccess,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.user_login_log" >
+    update user_login_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="triedPassword != null" >
+        tried_password = #{triedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="sessionIp != null" >
+        session_ip = #{sessionIp,jdbcType=VARCHAR},
+      </if>
+      <if test="usingSuperPassword != null" >
+        using_super_password = #{usingSuperPassword,jdbcType=CHAR},
+      </if>
+      <if test="loginDatetime != null" >
+        login_datetime = #{loginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="referer != null" >
+        referer = #{referer,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="loginSuccess != null" >
+        login_success = #{loginSuccess,jdbcType=CHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.user_login_log" >
+    update user_login_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+      tried_password = #{triedPassword,jdbcType=VARCHAR},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      session_ip = #{sessionIp,jdbcType=VARCHAR},
+      using_super_password = #{usingSuperPassword,jdbcType=CHAR},
+      login_datetime = #{loginDatetime,jdbcType=TIMESTAMP},
+      browser = #{browser,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      referer = #{referer,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      login_success = #{loginSuccess,jdbcType=CHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

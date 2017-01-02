@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.stay_signed_inMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.stay_signed_in" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="browser_version" property="browserVersion" jdbcType="VARCHAR" />
+    <result column="information1" property="information1" jdbcType="VARCHAR" />
+    <result column="information2" property="information2" jdbcType="VARCHAR" />
+    <result column="information3" property="information3" jdbcType="VARCHAR" />
+    <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="enable" property="enable" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, user_idx, version, token, browser, browser_version, information1, information2, 
+    information3, user_ip, datetime, enable
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.stay_signed_inExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stay_signed_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stay_signed_in
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stay_signed_in
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.stay_signed_inExample" >
+    delete from stay_signed_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.stay_signed_in" >
+    insert into stay_signed_in (idx, user_idx, version, 
+      token, browser, browser_version, 
+      information1, information2, information3, 
+      user_ip, datetime, enable
+      )
+    values (#{idx,jdbcType=INTEGER}, #{userIdx,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{token,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, #{browserVersion,jdbcType=VARCHAR}, 
+      #{information1,jdbcType=VARCHAR}, #{information2,jdbcType=VARCHAR}, #{information3,jdbcType=VARCHAR}, 
+      #{userIp,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{enable,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.stay_signed_in" >
+    insert into stay_signed_in
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="browserVersion != null" >
+        browser_version,
+      </if>
+      <if test="information1 != null" >
+        information1,
+      </if>
+      <if test="information2 != null" >
+        information2,
+      </if>
+      <if test="information3 != null" >
+        information3,
+      </if>
+      <if test="userIp != null" >
+        user_ip,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="browserVersion != null" >
+        #{browserVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="information1 != null" >
+        #{information1,jdbcType=VARCHAR},
+      </if>
+      <if test="information2 != null" >
+        #{information2,jdbcType=VARCHAR},
+      </if>
+      <if test="information3 != null" >
+        #{information3,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null" >
+        #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.stay_signed_inExample" resultType="java.lang.Integer" >
+    select count(*) from stay_signed_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stay_signed_in
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browserVersion != null" >
+        browser_version = #{record.browserVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.information1 != null" >
+        information1 = #{record.information1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.information2 != null" >
+        information2 = #{record.information2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.information3 != null" >
+        information3 = #{record.information3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIp != null" >
+        user_ip = #{record.userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enable != null" >
+        enable = #{record.enable,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stay_signed_in
+    set idx = #{record.idx,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      token = #{record.token,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      browser_version = #{record.browserVersion,jdbcType=VARCHAR},
+      information1 = #{record.information1,jdbcType=VARCHAR},
+      information2 = #{record.information2,jdbcType=VARCHAR},
+      information3 = #{record.information3,jdbcType=VARCHAR},
+      user_ip = #{record.userIp,jdbcType=VARCHAR},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      enable = #{record.enable,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.stay_signed_in" >
+    update stay_signed_in
+    <set >
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="browserVersion != null" >
+        browser_version = #{browserVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="information1 != null" >
+        information1 = #{information1,jdbcType=VARCHAR},
+      </if>
+      <if test="information2 != null" >
+        information2 = #{information2,jdbcType=VARCHAR},
+      </if>
+      <if test="information3 != null" >
+        information3 = #{information3,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null" >
+        user_ip = #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.stay_signed_in" >
+    update stay_signed_in
+    set user_idx = #{userIdx,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      token = #{token,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      browser_version = #{browserVersion,jdbcType=VARCHAR},
+      information1 = #{information1,jdbcType=VARCHAR},
+      information2 = #{information2,jdbcType=VARCHAR},
+      information3 = #{information3,jdbcType=VARCHAR},
+      user_ip = #{userIp,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      enable = #{enable,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

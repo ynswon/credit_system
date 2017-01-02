@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.funda.mybatis.dao.applicationMapper">
+
+     <resultMap id="ApplicationResultMap" type="com.funda.mybatis.model.application">
+        <id column="idx" jdbcType="INTEGER" property="idx" />
+        <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+        <result column="amount" jdbcType="INTEGER" property="amount" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="store_idx" jdbcType="INTEGER" property="storeIdx" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    </resultMap>
+
+    <!-- id의 경우에는 Mapper.java에 동일하게 사용해야된다. -->
+    <select id="getDateByDay" resultMap="ApplicationResultMap">
+        select DATE_FORMAT(datetime, '%Y-%m-%d') as datebyday, dayofweek(datetime),
+                 (case dayofweek(datetime)
+                        when 1 then '(일)'
+                        when 2 then '(월)'
+                        when 3 then '(화)'
+                        when 4 then '(수)'
+                        when 5 then '(목)'
+                        when 6 then '(금)'
+                        when 7 then '(토)' end) as dayweek,
+                 COUNT(*) as count
+                 from application group by DATE_FORMAT(datetime, '%Y-%m-%d')
+                 order by datebyday desc
+    </select>
+
+
+
+</mapper>

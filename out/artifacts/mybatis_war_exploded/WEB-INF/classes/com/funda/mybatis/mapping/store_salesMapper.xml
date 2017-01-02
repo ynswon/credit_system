@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.store_salesMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.store_sales" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="DATE" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="payment_type" property="paymentType" jdbcType="INTEGER" />
+    <result column="deposit" property="deposit" jdbcType="INTEGER" />
+    <result column="withdrawal" property="withdrawal" jdbcType="INTEGER" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+    <result column="visible" property="visible" jdbcType="INTEGER" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.store_sales" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, store_idx, date, payment_type, deposit, withdrawal, last_update, visible, session_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.store_salesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from store_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.store_salesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from store_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from store_sales
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from store_sales
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.store_salesExample" >
+    delete from store_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.store_sales" >
+    insert into store_sales (idx, store_idx, date, 
+      payment_type, deposit, withdrawal, 
+      last_update, visible, session_id, 
+      memo)
+    values (#{idx,jdbcType=INTEGER}, #{storeIdx,jdbcType=DATE}, #{date,jdbcType=DATE}, 
+      #{paymentType,jdbcType=INTEGER}, #{deposit,jdbcType=INTEGER}, #{withdrawal,jdbcType=INTEGER}, 
+      #{lastUpdate,jdbcType=TIMESTAMP}, #{visible,jdbcType=INTEGER}, #{sessionId,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.store_sales" >
+    insert into store_sales
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="deposit != null" >
+        deposit,
+      </if>
+      <if test="withdrawal != null" >
+        withdrawal,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+      <if test="visible != null" >
+        visible,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=DATE},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="deposit != null" >
+        #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawal != null" >
+        #{withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visible != null" >
+        #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.store_salesExample" resultType="java.lang.Integer" >
+    select count(*) from store_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update store_sales
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=DATE},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.deposit != null" >
+        deposit = #{record.deposit,jdbcType=INTEGER},
+      </if>
+      <if test="record.withdrawal != null" >
+        withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdate != null" >
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.visible != null" >
+        visible = #{record.visible,jdbcType=INTEGER},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update store_sales
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=DATE},
+      date = #{record.date,jdbcType=DATE},
+      payment_type = #{record.paymentType,jdbcType=INTEGER},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      visible = #{record.visible,jdbcType=INTEGER},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update store_sales
+    set idx = #{record.idx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=DATE},
+      date = #{record.date,jdbcType=DATE},
+      payment_type = #{record.paymentType,jdbcType=INTEGER},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      withdrawal = #{record.withdrawal,jdbcType=INTEGER},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      visible = #{record.visible,jdbcType=INTEGER},
+      session_id = #{record.sessionId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.store_sales" >
+    update store_sales
+    <set >
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=DATE},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="deposit != null" >
+        deposit = #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawal != null" >
+        withdrawal = #{withdrawal,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visible != null" >
+        visible = #{visible,jdbcType=INTEGER},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.store_sales" >
+    update store_sales
+    set store_idx = #{storeIdx,jdbcType=DATE},
+      date = #{date,jdbcType=DATE},
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      deposit = #{deposit,jdbcType=INTEGER},
+      withdrawal = #{withdrawal,jdbcType=INTEGER},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      visible = #{visible,jdbcType=INTEGER},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.store_sales" >
+    update store_sales
+    set store_idx = #{storeIdx,jdbcType=DATE},
+      date = #{date,jdbcType=DATE},
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      deposit = #{deposit,jdbcType=INTEGER},
+      withdrawal = #{withdrawal,jdbcType=INTEGER},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      visible = #{visible,jdbcType=INTEGER},
+      session_id = #{sessionId,jdbcType=VARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

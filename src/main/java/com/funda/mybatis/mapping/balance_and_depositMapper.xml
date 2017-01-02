@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.balance_and_depositMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.balance_and_deposit" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="bank_commission" property="bankCommission" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="BIGINT" />
+    <result column="idx_account_content" property="idxAccountContent" jdbcType="INTEGER" />
+    <result column="idx_list_creditor" property="idxListCreditor" jdbcType="INTEGER" />
+    <result column="idx_funding_data_debtor" property="idxFundingDataDebtor" jdbcType="INTEGER" />
+    <result column="idx_schedule_creditor" property="idxScheduleCreditor" jdbcType="INTEGER" />
+    <result column="idx_schedule_debtor" property="idxScheduleDebtor" jdbcType="INTEGER" />
+    <result column="idx_deposit_withdrawal_request" property="idxDepositWithdrawalRequest" jdbcType="INTEGER" />
+    <result column="idx_coupon_issue" property="idxCouponIssue" jdbcType="INTEGER" />
+    <result column="idx_list_coupon" property="idxListCoupon" jdbcType="INTEGER" />
+    <result column="user_idx" property="userIdx" jdbcType="INTEGER" />
+    <result column="store_idx" property="storeIdx" jdbcType="INTEGER" />
+    <result column="transact_time" property="transactTime" jdbcType="TIMESTAMP" />
+    <result column="withdrawalable_flag" property="withdrawalableFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.balance_and_deposit" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, amount, bank_commission, balance, idx_account_content, idx_list_creditor, idx_funding_data_debtor, 
+    idx_schedule_creditor, idx_schedule_debtor, idx_deposit_withdrawal_request, idx_coupon_issue, 
+    idx_list_coupon, user_idx, store_idx, transact_time, withdrawalable_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.balance_and_depositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from balance_and_deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.balance_and_depositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from balance_and_deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from balance_and_deposit
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from balance_and_deposit
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.balance_and_depositExample" >
+    delete from balance_and_deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.balance_and_deposit" >
+    insert into balance_and_deposit (idx, amount, bank_commission, 
+      balance, idx_account_content, idx_list_creditor, 
+      idx_funding_data_debtor, idx_schedule_creditor, 
+      idx_schedule_debtor, idx_deposit_withdrawal_request, 
+      idx_coupon_issue, idx_list_coupon, user_idx, 
+      store_idx, transact_time, withdrawalable_flag, 
+      memo)
+    values (#{idx,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{bankCommission,jdbcType=INTEGER}, 
+      #{balance,jdbcType=BIGINT}, #{idxAccountContent,jdbcType=INTEGER}, #{idxListCreditor,jdbcType=INTEGER}, 
+      #{idxFundingDataDebtor,jdbcType=INTEGER}, #{idxScheduleCreditor,jdbcType=INTEGER}, 
+      #{idxScheduleDebtor,jdbcType=INTEGER}, #{idxDepositWithdrawalRequest,jdbcType=INTEGER}, 
+      #{idxCouponIssue,jdbcType=INTEGER}, #{idxListCoupon,jdbcType=INTEGER}, #{userIdx,jdbcType=INTEGER}, 
+      #{storeIdx,jdbcType=INTEGER}, #{transactTime,jdbcType=TIMESTAMP}, #{withdrawalableFlag,jdbcType=CHAR}, 
+      #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.balance_and_deposit" >
+    insert into balance_and_deposit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="bankCommission != null" >
+        bank_commission,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="idxAccountContent != null" >
+        idx_account_content,
+      </if>
+      <if test="idxListCreditor != null" >
+        idx_list_creditor,
+      </if>
+      <if test="idxFundingDataDebtor != null" >
+        idx_funding_data_debtor,
+      </if>
+      <if test="idxScheduleCreditor != null" >
+        idx_schedule_creditor,
+      </if>
+      <if test="idxScheduleDebtor != null" >
+        idx_schedule_debtor,
+      </if>
+      <if test="idxDepositWithdrawalRequest != null" >
+        idx_deposit_withdrawal_request,
+      </if>
+      <if test="idxCouponIssue != null" >
+        idx_coupon_issue,
+      </if>
+      <if test="idxListCoupon != null" >
+        idx_list_coupon,
+      </if>
+      <if test="userIdx != null" >
+        user_idx,
+      </if>
+      <if test="storeIdx != null" >
+        store_idx,
+      </if>
+      <if test="transactTime != null" >
+        transact_time,
+      </if>
+      <if test="withdrawalableFlag != null" >
+        withdrawalable_flag,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="bankCommission != null" >
+        #{bankCommission,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="idxAccountContent != null" >
+        #{idxAccountContent,jdbcType=INTEGER},
+      </if>
+      <if test="idxListCreditor != null" >
+        #{idxListCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="idxFundingDataDebtor != null" >
+        #{idxFundingDataDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="idxScheduleCreditor != null" >
+        #{idxScheduleCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="idxScheduleDebtor != null" >
+        #{idxScheduleDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="idxDepositWithdrawalRequest != null" >
+        #{idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      </if>
+      <if test="idxCouponIssue != null" >
+        #{idxCouponIssue,jdbcType=INTEGER},
+      </if>
+      <if test="idxListCoupon != null" >
+        #{idxListCoupon,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="transactTime != null" >
+        #{transactTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawalableFlag != null" >
+        #{withdrawalableFlag,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.balance_and_depositExample" resultType="java.lang.Integer" >
+    select count(*) from balance_and_deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update balance_and_deposit
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankCommission != null" >
+        bank_commission = #{record.bankCommission,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.idxAccountContent != null" >
+        idx_account_content = #{record.idxAccountContent,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxListCreditor != null" >
+        idx_list_creditor = #{record.idxListCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxFundingDataDebtor != null" >
+        idx_funding_data_debtor = #{record.idxFundingDataDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxScheduleCreditor != null" >
+        idx_schedule_creditor = #{record.idxScheduleCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxScheduleDebtor != null" >
+        idx_schedule_debtor = #{record.idxScheduleDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxDepositWithdrawalRequest != null" >
+        idx_deposit_withdrawal_request = #{record.idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxCouponIssue != null" >
+        idx_coupon_issue = #{record.idxCouponIssue,jdbcType=INTEGER},
+      </if>
+      <if test="record.idxListCoupon != null" >
+        idx_list_coupon = #{record.idxListCoupon,jdbcType=INTEGER},
+      </if>
+      <if test="record.userIdx != null" >
+        user_idx = #{record.userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeIdx != null" >
+        store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="record.transactTime != null" >
+        transact_time = #{record.transactTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.withdrawalableFlag != null" >
+        withdrawalable_flag = #{record.withdrawalableFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update balance_and_deposit
+    set idx = #{record.idx,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      bank_commission = #{record.bankCommission,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=BIGINT},
+      idx_account_content = #{record.idxAccountContent,jdbcType=INTEGER},
+      idx_list_creditor = #{record.idxListCreditor,jdbcType=INTEGER},
+      idx_funding_data_debtor = #{record.idxFundingDataDebtor,jdbcType=INTEGER},
+      idx_schedule_creditor = #{record.idxScheduleCreditor,jdbcType=INTEGER},
+      idx_schedule_debtor = #{record.idxScheduleDebtor,jdbcType=INTEGER},
+      idx_deposit_withdrawal_request = #{record.idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      idx_coupon_issue = #{record.idxCouponIssue,jdbcType=INTEGER},
+      idx_list_coupon = #{record.idxListCoupon,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      transact_time = #{record.transactTime,jdbcType=TIMESTAMP},
+      withdrawalable_flag = #{record.withdrawalableFlag,jdbcType=CHAR},
+      memo = #{record.memo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update balance_and_deposit
+    set idx = #{record.idx,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      bank_commission = #{record.bankCommission,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=BIGINT},
+      idx_account_content = #{record.idxAccountContent,jdbcType=INTEGER},
+      idx_list_creditor = #{record.idxListCreditor,jdbcType=INTEGER},
+      idx_funding_data_debtor = #{record.idxFundingDataDebtor,jdbcType=INTEGER},
+      idx_schedule_creditor = #{record.idxScheduleCreditor,jdbcType=INTEGER},
+      idx_schedule_debtor = #{record.idxScheduleDebtor,jdbcType=INTEGER},
+      idx_deposit_withdrawal_request = #{record.idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      idx_coupon_issue = #{record.idxCouponIssue,jdbcType=INTEGER},
+      idx_list_coupon = #{record.idxListCoupon,jdbcType=INTEGER},
+      user_idx = #{record.userIdx,jdbcType=INTEGER},
+      store_idx = #{record.storeIdx,jdbcType=INTEGER},
+      transact_time = #{record.transactTime,jdbcType=TIMESTAMP},
+      withdrawalable_flag = #{record.withdrawalableFlag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.balance_and_deposit" >
+    update balance_and_deposit
+    <set >
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="bankCommission != null" >
+        bank_commission = #{bankCommission,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="idxAccountContent != null" >
+        idx_account_content = #{idxAccountContent,jdbcType=INTEGER},
+      </if>
+      <if test="idxListCreditor != null" >
+        idx_list_creditor = #{idxListCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="idxFundingDataDebtor != null" >
+        idx_funding_data_debtor = #{idxFundingDataDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="idxScheduleCreditor != null" >
+        idx_schedule_creditor = #{idxScheduleCreditor,jdbcType=INTEGER},
+      </if>
+      <if test="idxScheduleDebtor != null" >
+        idx_schedule_debtor = #{idxScheduleDebtor,jdbcType=INTEGER},
+      </if>
+      <if test="idxDepositWithdrawalRequest != null" >
+        idx_deposit_withdrawal_request = #{idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      </if>
+      <if test="idxCouponIssue != null" >
+        idx_coupon_issue = #{idxCouponIssue,jdbcType=INTEGER},
+      </if>
+      <if test="idxListCoupon != null" >
+        idx_list_coupon = #{idxListCoupon,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null" >
+        user_idx = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="storeIdx != null" >
+        store_idx = #{storeIdx,jdbcType=INTEGER},
+      </if>
+      <if test="transactTime != null" >
+        transact_time = #{transactTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawalableFlag != null" >
+        withdrawalable_flag = #{withdrawalableFlag,jdbcType=CHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.balance_and_deposit" >
+    update balance_and_deposit
+    set amount = #{amount,jdbcType=INTEGER},
+      bank_commission = #{bankCommission,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=BIGINT},
+      idx_account_content = #{idxAccountContent,jdbcType=INTEGER},
+      idx_list_creditor = #{idxListCreditor,jdbcType=INTEGER},
+      idx_funding_data_debtor = #{idxFundingDataDebtor,jdbcType=INTEGER},
+      idx_schedule_creditor = #{idxScheduleCreditor,jdbcType=INTEGER},
+      idx_schedule_debtor = #{idxScheduleDebtor,jdbcType=INTEGER},
+      idx_deposit_withdrawal_request = #{idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      idx_coupon_issue = #{idxCouponIssue,jdbcType=INTEGER},
+      idx_list_coupon = #{idxListCoupon,jdbcType=INTEGER},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      transact_time = #{transactTime,jdbcType=TIMESTAMP},
+      withdrawalable_flag = #{withdrawalableFlag,jdbcType=CHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.balance_and_deposit" >
+    update balance_and_deposit
+    set amount = #{amount,jdbcType=INTEGER},
+      bank_commission = #{bankCommission,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=BIGINT},
+      idx_account_content = #{idxAccountContent,jdbcType=INTEGER},
+      idx_list_creditor = #{idxListCreditor,jdbcType=INTEGER},
+      idx_funding_data_debtor = #{idxFundingDataDebtor,jdbcType=INTEGER},
+      idx_schedule_creditor = #{idxScheduleCreditor,jdbcType=INTEGER},
+      idx_schedule_debtor = #{idxScheduleDebtor,jdbcType=INTEGER},
+      idx_deposit_withdrawal_request = #{idxDepositWithdrawalRequest,jdbcType=INTEGER},
+      idx_coupon_issue = #{idxCouponIssue,jdbcType=INTEGER},
+      idx_list_coupon = #{idxListCoupon,jdbcType=INTEGER},
+      user_idx = #{userIdx,jdbcType=INTEGER},
+      store_idx = #{storeIdx,jdbcType=INTEGER},
+      transact_time = #{transactTime,jdbcType=TIMESTAMP},
+      withdrawalable_flag = #{withdrawalableFlag,jdbcType=CHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

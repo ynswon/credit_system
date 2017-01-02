@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.user_authMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.user_auth" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="purpose" property="purpose" jdbcType="CHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="phone_ack" property="phoneAck" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="email_ack" property="emailAck" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="auth_phone_key" property="authPhoneKey" jdbcType="VARCHAR" />
+    <result column="auth_email_key" property="authEmailKey" jdbcType="VARCHAR" />
+    <result column="issued_datetime" property="issuedDatetime" jdbcType="TIMESTAMP" />
+    <result column="expire_datetime" property="expireDatetime" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.funda.mybatis.model.user_auth" extends="BaseResultMap" >
+    <result column="message" property="message" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, purpose, phone_num, phone_ack, email, email_ack, user_id, ip_address, auth_phone_key, 
+    auth_email_key, issued_datetime, expire_datetime, result
+  </sql>
+  <sql id="Blob_Column_List" >
+    message
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.funda.mybatis.model.user_authExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_auth
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.user_authExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_auth
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_auth
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_auth
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.user_authExample" >
+    delete from user_auth
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.user_auth" >
+    insert into user_auth (idx, purpose, phone_num, 
+      phone_ack, email, email_ack, 
+      user_id, ip_address, auth_phone_key, 
+      auth_email_key, issued_datetime, expire_datetime, 
+      result, message)
+    values (#{idx,jdbcType=INTEGER}, #{purpose,jdbcType=CHAR}, #{phoneNum,jdbcType=VARCHAR}, 
+      #{phoneAck,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{emailAck,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, #{authPhoneKey,jdbcType=VARCHAR}, 
+      #{authEmailKey,jdbcType=VARCHAR}, #{issuedDatetime,jdbcType=TIMESTAMP}, #{expireDatetime,jdbcType=TIMESTAMP}, 
+      #{result,jdbcType=INTEGER}, #{message,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.user_auth" >
+    insert into user_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="phoneAck != null" >
+        phone_ack,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="emailAck != null" >
+        email_ack,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="ipAddress != null" >
+        ip_address,
+      </if>
+      <if test="authPhoneKey != null" >
+        auth_phone_key,
+      </if>
+      <if test="authEmailKey != null" >
+        auth_email_key,
+      </if>
+      <if test="issuedDatetime != null" >
+        issued_datetime,
+      </if>
+      <if test="expireDatetime != null" >
+        expire_datetime,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=CHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneAck != null" >
+        #{phoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAck != null" >
+        #{emailAck,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="authPhoneKey != null" >
+        #{authPhoneKey,jdbcType=VARCHAR},
+      </if>
+      <if test="authEmailKey != null" >
+        #{authEmailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedDatetime != null" >
+        #{issuedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDatetime != null" >
+        #{expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.user_authExample" resultType="java.lang.Integer" >
+    select count(*) from user_auth
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_auth
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.purpose != null" >
+        purpose = #{record.purpose,jdbcType=CHAR},
+      </if>
+      <if test="record.phoneNum != null" >
+        phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneAck != null" >
+        phone_ack = #{record.phoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailAck != null" >
+        email_ack = #{record.emailAck,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipAddress != null" >
+        ip_address = #{record.ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authPhoneKey != null" >
+        auth_phone_key = #{record.authPhoneKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authEmailKey != null" >
+        auth_email_key = #{record.authEmailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuedDatetime != null" >
+        issued_datetime = #{record.issuedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireDatetime != null" >
+        expire_datetime = #{record.expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=INTEGER},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update user_auth
+    set idx = #{record.idx,jdbcType=INTEGER},
+      purpose = #{record.purpose,jdbcType=CHAR},
+      phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      phone_ack = #{record.phoneAck,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      email_ack = #{record.emailAck,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      ip_address = #{record.ipAddress,jdbcType=VARCHAR},
+      auth_phone_key = #{record.authPhoneKey,jdbcType=VARCHAR},
+      auth_email_key = #{record.authEmailKey,jdbcType=VARCHAR},
+      issued_datetime = #{record.issuedDatetime,jdbcType=TIMESTAMP},
+      expire_datetime = #{record.expireDatetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=INTEGER},
+      message = #{record.message,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_auth
+    set idx = #{record.idx,jdbcType=INTEGER},
+      purpose = #{record.purpose,jdbcType=CHAR},
+      phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      phone_ack = #{record.phoneAck,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      email_ack = #{record.emailAck,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      ip_address = #{record.ipAddress,jdbcType=VARCHAR},
+      auth_phone_key = #{record.authPhoneKey,jdbcType=VARCHAR},
+      auth_email_key = #{record.authEmailKey,jdbcType=VARCHAR},
+      issued_datetime = #{record.issuedDatetime,jdbcType=TIMESTAMP},
+      expire_datetime = #{record.expireDatetime,jdbcType=TIMESTAMP},
+      result = #{record.result,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.user_auth" >
+    update user_auth
+    <set >
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=CHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneAck != null" >
+        phone_ack = #{phoneAck,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAck != null" >
+        email_ack = #{emailAck,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="authPhoneKey != null" >
+        auth_phone_key = #{authPhoneKey,jdbcType=VARCHAR},
+      </if>
+      <if test="authEmailKey != null" >
+        auth_email_key = #{authEmailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedDatetime != null" >
+        issued_datetime = #{issuedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDatetime != null" >
+        expire_datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.funda.mybatis.model.user_auth" >
+    update user_auth
+    set purpose = #{purpose,jdbcType=CHAR},
+      phone_num = #{phoneNum,jdbcType=VARCHAR},
+      phone_ack = #{phoneAck,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      email_ack = #{emailAck,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      auth_phone_key = #{authPhoneKey,jdbcType=VARCHAR},
+      auth_email_key = #{authEmailKey,jdbcType=VARCHAR},
+      issued_datetime = #{issuedDatetime,jdbcType=TIMESTAMP},
+      expire_datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER},
+      message = #{message,jdbcType=LONGVARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.user_auth" >
+    update user_auth
+    set purpose = #{purpose,jdbcType=CHAR},
+      phone_num = #{phoneNum,jdbcType=VARCHAR},
+      phone_ack = #{phoneAck,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      email_ack = #{emailAck,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      auth_phone_key = #{authPhoneKey,jdbcType=VARCHAR},
+      auth_email_key = #{authEmailKey,jdbcType=VARCHAR},
+      issued_datetime = #{issuedDatetime,jdbcType=TIMESTAMP},
+      expire_datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

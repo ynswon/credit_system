@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.funda.mybatis.dao.credit_policyMapper" >
+  <resultMap id="BaseResultMap" type="com.funda.mybatis.model.credit_policy" >
+    <id column="idx" property="idx" jdbcType="INTEGER" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="iindex" property="iindex" jdbcType="VARCHAR" />
+    <result column="repay_future" property="repayFuture" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="seg" property="seg" jdbcType="VARCHAR" />
+    <result column="policy" property="policy" jdbcType="VARCHAR" />
+    <result column="qualified_yn" property="qualifiedYn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idx, period, iindex, repay_future, value, seg, policy, qualified_yn
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.funda.mybatis.model.credit_policyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from credit_policy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from credit_policy
+    where idx = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from credit_policy
+    where idx = #{idx,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.funda.mybatis.model.credit_policyExample" >
+    delete from credit_policy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.funda.mybatis.model.credit_policy" >
+    insert into credit_policy (idx, period, iindex, 
+      repay_future, value, seg, 
+      policy, qualified_yn)
+    values (#{idx,jdbcType=INTEGER}, #{period,jdbcType=INTEGER}, #{iindex,jdbcType=VARCHAR}, 
+      #{repayFuture,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{seg,jdbcType=VARCHAR}, 
+      #{policy,jdbcType=VARCHAR}, #{qualifiedYn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.funda.mybatis.model.credit_policy" >
+    insert into credit_policy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        idx,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="iindex != null" >
+        iindex,
+      </if>
+      <if test="repayFuture != null" >
+        repay_future,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="seg != null" >
+        seg,
+      </if>
+      <if test="policy != null" >
+        policy,
+      </if>
+      <if test="qualifiedYn != null" >
+        qualified_yn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idx != null" >
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="iindex != null" >
+        #{iindex,jdbcType=VARCHAR},
+      </if>
+      <if test="repayFuture != null" >
+        #{repayFuture,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="seg != null" >
+        #{seg,jdbcType=VARCHAR},
+      </if>
+      <if test="policy != null" >
+        #{policy,jdbcType=VARCHAR},
+      </if>
+      <if test="qualifiedYn != null" >
+        #{qualifiedYn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.funda.mybatis.model.credit_policyExample" resultType="java.lang.Integer" >
+    select count(*) from credit_policy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update credit_policy
+    <set >
+      <if test="record.idx != null" >
+        idx = #{record.idx,jdbcType=INTEGER},
+      </if>
+      <if test="record.period != null" >
+        period = #{record.period,jdbcType=INTEGER},
+      </if>
+      <if test="record.iindex != null" >
+        iindex = #{record.iindex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repayFuture != null" >
+        repay_future = #{record.repayFuture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null" >
+        value = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seg != null" >
+        seg = #{record.seg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policy != null" >
+        policy = #{record.policy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualifiedYn != null" >
+        qualified_yn = #{record.qualifiedYn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update credit_policy
+    set idx = #{record.idx,jdbcType=INTEGER},
+      period = #{record.period,jdbcType=INTEGER},
+      iindex = #{record.iindex,jdbcType=VARCHAR},
+      repay_future = #{record.repayFuture,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=VARCHAR},
+      seg = #{record.seg,jdbcType=VARCHAR},
+      policy = #{record.policy,jdbcType=VARCHAR},
+      qualified_yn = #{record.qualifiedYn,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.funda.mybatis.model.credit_policy" >
+    update credit_policy
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="iindex != null" >
+        iindex = #{iindex,jdbcType=VARCHAR},
+      </if>
+      <if test="repayFuture != null" >
+        repay_future = #{repayFuture,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="seg != null" >
+        seg = #{seg,jdbcType=VARCHAR},
+      </if>
+      <if test="policy != null" >
+        policy = #{policy,jdbcType=VARCHAR},
+      </if>
+      <if test="qualifiedYn != null" >
+        qualified_yn = #{qualifiedYn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.funda.mybatis.model.credit_policy" >
+    update credit_policy
+    set period = #{period,jdbcType=INTEGER},
+      iindex = #{iindex,jdbcType=VARCHAR},
+      repay_future = #{repayFuture,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      seg = #{seg,jdbcType=VARCHAR},
+      policy = #{policy,jdbcType=VARCHAR},
+      qualified_yn = #{qualifiedYn,jdbcType=VARCHAR}
+    where idx = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>
