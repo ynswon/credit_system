@@ -9,6 +9,7 @@ and using bayesian for time-series prediction for revenue and anomaly detection 
     - Revenue( Sales, Revenue, Menu, Size, rent fee or so on)
     - Bank deposits ( Cash flow, anomaly point of free cash flow, useless payment)
     - Social Data(Search amount, good/bad mention of stores
+    
   2) algorithm
     - variables selection( EDA, IV Value, KS score or so on)
     - credit evaluation( cross matrix )
